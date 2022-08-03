@@ -1,1 +1,1 @@
-docker exec -w /app/setup/scripts -it x-fpm ../../app/dependencies/bin/psalm --no-progress
+docker exec -w /app/setup/scripts -it pmr-fpm ../../app/dependencies/bin/psalm --no-progress

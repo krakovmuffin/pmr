@@ -25,7 +25,6 @@
         <directory name="../../app/jobs" />
         <directory name="../../app/middlewares" />
         <directory name="../../app/routes" />
-        <directory name="../../app/scripts" />
         <directory name="../../app/services" />
 
         <!-- IGNORE THESE -->

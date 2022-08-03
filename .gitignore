@@ -7,6 +7,5 @@ VagrantFile
 uploads
 
 app/dependencies/
-!/dependencies/.gitkeep
-!/dependencies/readme.md
-!/dependencies/.htaccess
+!/app/dependencies/.gitkeep
+!/app/dependencies/readme.md
