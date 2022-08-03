@@ -1,0 +1,20 @@
+{
+  "name": "adriel/boilerplate",
+  "description": "A powerful yet flexible boilerplate for scalable and robust PHP projects",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Adriel Solutions",
+      "email": "it@adriel.solutions"
+    }
+  ],
+  "minimum-stability": "dev",
+  "config": {
+    "vendor-dir": "app/dependencies",
+    "platform-check": false
+  },
+  "require-dev": {
+    "vimeo/psalm": "5.x-dev"
+  }
+}

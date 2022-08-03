@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="5"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+
+    autoloader="../../bootstrap/autoloader.php"
+>
+    <extraFiles>
+        <file name="../../bootstrap/libs/Sugar.php" />
+    </extraFiles>
+
+    <projectFiles>
+        <!-- Bootstrap-related -->
+        <file name="../../bootstrap/autoloader.php" />
+        <file name="../../bootstrap/index.php" />
+        <directory name="../../bootstrap/bin" />
+        <directory name="../../bootstrap/libs" />
+
+        <!-- App-related -->
+        <directory name="../../app/adapters" />
+        <directory name="../../app/controllers" />
+        <directory name="../../app/jobs" />
+        <directory name="../../app/middlewares" />
+        <directory name="../../app/routes" />
+        <directory name="../../app/scripts" />
+        <directory name="../../app/services" />
+
+        <!-- IGNORE THESE -->
+        <!-- Can't figure how to have Psalm find global required variables / functions -->
+        <ignoreFiles>
+            <directory name="../../app/dependencies" />
+            <directory name="../../app/views" />
+            <directory name="../../app/thirdparties" />
+            <directory name="../../app/translations" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <!-- SYNTACTICAL SUGARS -->
+    <stubs>
+        <file name="../../bootstrap/libs/Sugar.php" />
+    </stubs>
+
+    <!-- IGNORES -->
+    <issueHandlers>
+        <InvalidArrayOffset errorLevel="suppress"/>
+
+        <InvalidArgument>
+                <errorLevel type="suppress">
+                    <file name="../../bootstrap/index.php" />
+                </errorLevel>
+        </InvalidArgument>
+
+    </issueHandlers>
+
+</psalm>

@@ -1,0 +1,12 @@
+*.log
+*.env
+VagrantFile
+.vagrant
+/.htaccess
+!configuration/sample.env
+uploads
+
+app/dependencies/
+!/dependencies/.gitkeep
+!/dependencies/readme.md
+!/dependencies/.htaccess

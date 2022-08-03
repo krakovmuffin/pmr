@@ -1,0 +1,48 @@
+version: '3.3'
+
+services:
+  x-web:
+    image: 'nginx:stable-alpine'
+    container_name: "x-web"
+    restart: always
+    depends_on:
+      - x-db
+      - x-fpm
+    volumes:
+      - .:/app
+      - ./docker/nginx/app.conf:/etc/nginx/conf.d/default.conf
+      - ./logs/nginx:/var/log/nginx
+    ports:
+      - 2500:80
+    networks:
+     - global
+
+  x-db:
+    image: postgres:12.1
+    container_name: "x-db"
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    expose:
+      - 5432
+    volumes:
+      - ./setup/database/db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - global
+
+  x-fpm:
+    image: adriel/boilerplate-php-fpm
+    container_name: "x-fpm"
+    volumes:
+      - .:/app
+      - ./logs/php:/var/log/php-fpm
+    expose:
+      - 9000
+    networks:
+      - global
+
+networks:
+  global:
+    external: true
