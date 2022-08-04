@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd configuration
-cp .settings.env sample.env
+cp .custom.env sample.env
 
 # Database-related (DB_X=Y -> DB_X=X)
 sed -i '' -E 's/^(DB_([a-zA-Z_]+))=".+"$/\1="\2"/g' sample.env
