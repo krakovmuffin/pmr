@@ -47,6 +47,12 @@
     Database::load();
 
     /**
+     * Retrieve extra settings from database, if enabled
+     */
+    if(Options::get('EXTRA_SETTINGS_ENABLED'))
+        Options::load_from_database();
+
+    /**
      * The app is just a global HTTP router
      */
     $app = new Router();

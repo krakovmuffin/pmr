@@ -50,6 +50,26 @@
         }
 
         /**
+         * Reads extra settings stored in database and stores them in self::$fields
+         */
+        public static function load_from_database() {
+            $service = new Service();
+            $service->set_table('settings');
+
+            $settings = $service->get_all();
+
+            foreach($settings as $s) {
+                $key = $s['name'];
+                $type = $s['type'];
+                $value = $s['value'];
+
+                settype($value, $type);
+
+                self::$fields[$key] = $value;
+            }
+        }
+
+        /**
          * Returns the value of a given field, and an empty string if not found
          * @param {string} $field : The key of the field to retrieve the value of
          * @return {string} The value associated with $field, and an empty string if absent
