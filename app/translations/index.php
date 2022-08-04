@@ -1,2 +1,2 @@
 <?php
-    include __DIR__ . '/fr-FR.php';
+    include __DIR__ . '/en-us.php';
