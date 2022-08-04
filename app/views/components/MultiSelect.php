@@ -13,7 +13,7 @@
 
 <?php
     // Treat values for Javascript
-    $params['values'] = coalesce_array($params, 'values', []);
+    $params['values'] = !empty($params['values']) ? $params['values'] : [];
 ?>
 
 <div
