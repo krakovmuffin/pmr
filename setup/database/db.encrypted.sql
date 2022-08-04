@@ -38,4 +38,3 @@ CREATE TABLE jobs (
 
     PRIMARY KEY (pk)
 );
-
