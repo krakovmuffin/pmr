@@ -25,7 +25,7 @@ VALUES
 ( 'STORAGE_AWS_REGION' , 'string' , NULL ),
 ( 'STORAGE_AWS_BUCKET' , 'string' , NULL ),
 ( 'STORAGE_AWS_KEY' , 'string' , NULL ),
-( 'STORAGE_AWS_SECRET' , 'string' , NULL );
-
-
--- users
+( 'STORAGE_AWS_SECRET' , 'string' , NULL ),
+-- accounts-related
+( 'REGISTRATION_ENABLED' , 'boolean' , 'false' ),
+( 'PASSWORD_RESET_ENABLED' , 'boolean' , 'false' );
