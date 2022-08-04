@@ -28,7 +28,7 @@
         <?php endif; ?>
 
         <!-- DEFAULT JS -->
-        <script type="application/javascript" src="<?= front_asset_path('/scripts/libs.js') ?>"></script>
+        <script type="application/javascript" src="<?= front_asset_path('/scripts/core.js') ?>"></script>
 
         <?php if(!empty($scripts)): ?>
             <!-- PAGE SCRIPTS -->
