@@ -9,41 +9,44 @@
             return;
         }
 
-        // Case when : Abreviation_Class
-        if(count($parts) === 2) {
-            // NX_YYY -> /bootstrap
-            if ( str_starts_with($parts[0] , 'N' ) ) {
-                $base_dir = '/bootstrap';
-                $parts[0] = substr($parts[0], 1);
-            } 
-            // X_YYY -> /app
-            else 
-                $base_dir = '/app';
+        // Case when : Abreviation_[Folder]_Class
 
-            $mapping = [
-                // Predefined directories
-                'A' => 'adapters',
-                'C' => 'controllers',
-                'J' => 'jobs',
-                'M' => 'middlewares',
-                'R' => 'routes',
-                'S' => 'services',
-                'T' => 'thirdparties',
-            ];
+        // NX_YYY -> /bootstrap
+        if ( str_starts_with($parts[0] , 'N' ) ) {
+            $base_dir = '/bootstrap';
+            $parts[0] = substr($parts[0], 1);
+        } 
+        // X_YYY -> /app
+        else 
+            $base_dir = '/app';
 
-            $subfolder = $mapping[$parts[0]];
+        $mapping = [
+            // Predefined directories
+            'A' => 'adapters',
+            'C' => 'controllers',
+            'J' => 'jobs',
+            'M' => 'middlewares',
+            'R' => 'routes',
+            'S' => 'services',
+            'T' => 'thirdparties',
+        ];
 
-            require 
-                __DIR__     . 
-                '/..'       . 
-                $base_dir   . 
-                '/'         .
-                $subfolder  .
-                '/'         .
-                strtolower($parts[1]) . '.php';
+        $subfolder = $mapping[$parts[0]];
 
-            return;
-        }
+        // Sub-case when class is inside a subdirectory or chain of
+        if(count($parts) > 2)
+            $subfolder .= '/' . join('/', array_slice($parts, 1, -1));
+
+        require 
+            __DIR__     . 
+            '/..'       . 
+            $base_dir   . 
+            '/'         .
+            $subfolder  .
+            '/'         .
+            strtolower(end($parts)) . '.php';
+
+        return;
     }
 
     spl_autoload_register('autoloader');
