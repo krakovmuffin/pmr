@@ -32,7 +32,15 @@
     }
 
     function front_asset_path($path) {
-        return Options::get('ROOT_ASSETS') . '/' . $path . '?v=' . Options::get('ASSETS_VERSION');
+        return 
+            Options::get('ROOT_ASSETS') 
+            . '/' 
+            . $path 
+            . (
+                ( Options::get('MODE')  === 'PRODUCTION' )
+                ? '?v=' . Options::get('ASSETS_VERSION') 
+                : '' 
+            );
     }
 
     /**

@@ -44,14 +44,21 @@
                 continue;
         }
 
-        // 3. Job scheduled once for the future, but was already run previously
-        if ( !empty($job['scheduled_for']) ) {
-            if ( !empty($job['last_run_at']) )
-                $service->delete($job['pk']);
+        // 3. Job recurrent and scheduled to start in the future but we're not there yet
+        if ( !empty($job['scheduled_from']) ) {
+            if ( strtotime($job['scheduled_from']) > $now )
                 continue;
         }
 
-        // 4. Job is recurrent but the frequency hasn't been passed yet
+        // 4. Job scheduled once for the future, but was already run previously
+        if ( !empty($job['scheduled_for']) ) {
+            if ( !empty($job['last_run_at']) ) {
+                $service->delete($job['pk']);
+                continue;
+            }
+        }
+
+        // 5. Job is recurrent but the frequency hasn't been passed yet
         if ( !empty($job['schedule_frequency']) ) {
             $last_run_at = strtotime( empty($job['last_run_at']) ? $job['created_at'] : $job['last_run_at'] );
             $frequency = strtotime($job['schedule_frequency'], 0);
@@ -61,7 +68,7 @@
         }
 
         // Job can be run
-        $context = json_decode($job['context']);
+        $context = json_decode($job['context'], true);
         $report = 'The job executed succesfully';
 
         try {
@@ -91,3 +98,4 @@
             );
         }
     }
+

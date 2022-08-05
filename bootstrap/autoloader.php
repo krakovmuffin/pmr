@@ -42,7 +42,7 @@
             '/..'       . 
             $base_dir   . 
             '/'         .
-            $subfolder  .
+            strtolower($subfolder)  .
             '/'         .
             strtolower(end($parts)) . '.php';
 

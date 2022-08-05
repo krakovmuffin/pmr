@@ -1,8 +1,6 @@
 <?php
 
     class Queue {
-        private $instance;
-
         private $job;
 
         private $scheduled_for;
@@ -34,6 +32,7 @@
                 $date = date('c');
 
             $this->scheduled_for = $date;
+            $this->is_exclusive = true;
 
             return $this;
         }
@@ -72,6 +71,7 @@
             if ( isset($this->schedule_frequency) && isset($this->scheduled_for) )
                 throw new Exception("Queue: every() and for() can't be used at the same time. Please use either every()->from() or for() alone. ");
 
+
             if ( isset($this->schedule_frequency) )
                 $row = array_merge(
                     $row,
@@ -93,3 +93,4 @@
             $service->create($row);
         }
     }
+
