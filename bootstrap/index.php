@@ -12,7 +12,7 @@
     /**
      * Global syntactic sugars
      */
-    require __DIR__ . '/libs/Sugar.php';
+    require __DIR__ . '/libs/sugar.php';
 
     /**
      * Project configuration
