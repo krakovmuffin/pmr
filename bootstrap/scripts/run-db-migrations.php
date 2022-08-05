@@ -26,7 +26,7 @@
     // -----------------
     print("Script : run-db-migrations\n");
 
-    $is_encryption_enabled = Options::get('ENCRYPTION_ENABLED');
+    $is_encryption_enabled = Options::get('DB_ENCRYPTION_ENABLED');
     $dir_migrations = __DIR__ . '/../../setup/database';
     $files = scandir($dir_migrations);
     $file_prefix = $is_encryption_enabled ? 'migration-encrypted' : 'migration';
@@ -58,7 +58,7 @@
     // Order migrations by date
     usort(
         $migrations,
-        function($a, $b) {
+        function($a, $b) use ($file_prefix) {
             $a_date = substr($a, strlen($file_prefix) + 1, 8);
             $b_date = substr($b, strlen($file_prefix) + 1, 8);
 
