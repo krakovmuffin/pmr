@@ -16,8 +16,13 @@
                 'password' => [ 'required' , 'string' ]
             ];
 
+            throw new Error('ok');
+
             if(!Validator::is_valid_schema($payload, $schema))
                 return $res->send_malformed();
+
+            if(!$this->services['users']->exists_one([ 'email' => $payload['email'] ]))
+                return $res->send_unauthorized();
 
             $user = $this->services['users']->find_one([ 'email' => $payload['email'] ]);
 
