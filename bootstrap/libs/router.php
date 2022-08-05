@@ -36,9 +36,6 @@
             // Default route prefix for this router
             $this->routes_prefix = "";
 
-            // Default error handler
-            $this->error_handler = function ($req, $res, $n, &$e) { throw $e; $n = false; };
-
             // Load overriden settings
             $this->load();
         }
@@ -160,12 +157,13 @@
                 }
             }
 
-            // Mount error handler like it were a route called by HTTP verb ERROR
-            $this->append(
-                '_ERROR_',
-                $router->get_prefix() . '(/.*)?',
-                $router->get_error_handler()
-            );
+            // Mount error handler like it were a route called by HTTP verb _ERROR_
+            if(!empty($router->get_error_handler()))
+                $this->append(
+                    '_ERROR_',
+                    $router->get_prefix() . '(/.*)?',
+                    $router->get_error_handler()
+                );
         }
 
         /**
@@ -294,7 +292,6 @@
                 else
                     $regex = '^'.str_replace('/', '\\/', $prefix.$available_route).'$';
 
-                /* vd($available_route, count($handlers)); */
                 // Turns the route params into standard regex parts
                 // :route_param -> [a-ZA-Z0-9_-]+
                 if(strpos($regex, ':') !== false)
