@@ -71,15 +71,16 @@
             instance.payload[name] = value;
           }
         );
-      },
 
-      /**
-       * Simple redirect using the HTML attribute "data-redirect=URL"
-       */
-      redirect: (instance) => {
-        let url = instance.$el.dataset.redirect;
-        if (!url) return;
-        window.location = url;
+        /**
+         * Define `redirect` method, that can, post-submit, redirect to
+         * URL defined by `data-redirect=URL`
+         */
+        instance.redirect = () => {
+          const url = instance.$el.dataset.redirect;
+          if (!url) return;
+          window.location = url;
+        };
       },
     };
 
