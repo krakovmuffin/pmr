@@ -1,7 +1,7 @@
 <?php
 
     class NM_Cors extends Middleware {
-        public function __invoke($req, $res) {
+        public function __invoke($req, $res, &$next) {
           if($req->method !== 'OPTIONS') return;
 
           $allowed_origin = Options::get('CORS_ORIGIN');

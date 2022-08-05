@@ -1,7 +1,7 @@
 <?php
 
     class NM_Signature extends Middleware {
-        public function __invoke($req, $res) {
+        public function __invoke($req, $res, &$next) {
             if ( Options::get('ENABLE_ANTI_TAMPERING') === false ) return;
 
             if(empty($req->headers['x-adriel-signature'])) {

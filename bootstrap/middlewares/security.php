@@ -1,7 +1,7 @@
 <?php
 
     class NM_Security extends Middleware {
-        public function __invoke($req, $res) {
+        public function __invoke($req, $res, &$next) {
             // Remove "X-Powered-By"
             header_remove("X-Powered-By");
 

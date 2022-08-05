@@ -43,7 +43,7 @@
 
                 if(!$is_logged) {
                     $next = false;
-                    return $res->send_malformed();
+                    return $res->redirect(front_path('/sign-in'));
                 }
 
                 $user_id = $req->session->get('user_id');

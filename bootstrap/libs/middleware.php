@@ -2,5 +2,5 @@
 
     class Middleware {
         // @override
-        public function __invoke($req, $res) {  }
+        public function __invoke($req, $res, &$next) {  }
     }

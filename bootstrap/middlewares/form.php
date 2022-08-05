@@ -1,7 +1,7 @@
 <?php
 
     class NM_Form extends Middleware {
-        public function __invoke($req, $res) {
+        public function __invoke($req, $res, &$next) {
             if ( !isset($req->headers['content-type']) )
                 return;
 
