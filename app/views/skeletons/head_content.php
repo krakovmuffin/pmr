@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- TITLE -->
-        <title><?= $title ?></title>
+        <title>PMR - <?= $title ?></title>
 
         <!-- DESCRIPTION -->
         <meta name="description" content="<?= $description ?>" />
@@ -59,4 +59,4 @@
         <script type="application/javascript" src="<?= front_asset_path('/scripts/dependencies/alpine.min.js') ?>" defer></script>
 
         <!-- FAVICON -->
-        <link rel="icon" type="image/png" href="<?= front_asset_path('/favicon.ico') ?>" />
+        <link rel="icon" type="image/png" href="<?= front_asset_path('/images/favicon.ico') ?>" />

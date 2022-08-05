@@ -1,1 +1,1 @@
-<html class="h-full" lang="en">
+<html class="h-full bg-white" lang="en">
