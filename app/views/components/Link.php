@@ -1,16 +1,30 @@
 <?php
     /**
      * Parameters :
-     * - size : string (2 letters, Tailwind-ish)
+     * - size : string (2+ letters, Tailwind-ish, like in font-medium. -> medium <-)
      * - href : string
      * - text : string
+     * - type : string
      */
 ?>
-<div class="text-<?= empty($params['size']) ? 'md' : $params['size'] ?>">
-    <a 
-        href="<?= $params['href'] ?>"
-        class="font-medium text-blue-600 hover:text-blue-500"
-    > 
-        <?= $params['text'] ?>
-    </a>
-</div>
+<?php
+    $type = $params['type'] ?? 'default'; 
+    switch($type) {
+        case 'default':
+            $class_color = 'text-teal-600 hover:text-teal-500';
+            break;
+    }
+
+    $size = $params['size'] ?? 'default';
+    switch($size) {
+        case 'default':
+            $class_size = 'font-medium';
+            break;
+    }
+?>
+<a 
+    href="<?= $params['href'] ?>"
+    class="<?= $class_color ?> <?= $class_size ?>"
+> 
+    <?= $params['text'] ?>
+</a>

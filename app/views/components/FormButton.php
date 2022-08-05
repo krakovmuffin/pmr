@@ -1,15 +1,23 @@
 <?php
     /**
      * Parameters :
-     * - color : string
+     * - type : string
      * - native : boolean (whether to use Alpine or not)
      * - text : string
+     * - type : string
      */
 ?>
-<?php $color = $params['color'] ?? 'blue'; ?>
+<?php 
+    $type = $params['type'] ?? 'default'; 
+    switch($type) {
+        case 'default':
+            $class_color = 'bg-teal-600 hover:bg-teal-700 focus:ring-teal-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200';
+            break;
+    }
+?>
 <button 
     type="submit" 
-    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-<?= $color ?>-600 hover:bg-<?= $color ?>-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-<?= $color ?>-500 disabled:cursor-not-allowed disabled:bg-<?= $color ?>-400"
+    class="<?= $class_color ?> w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed"
 
     <?php if ( !isset($params['native']) || $params['native'] === false ): ?>
         x-bind:disabled="!ready"

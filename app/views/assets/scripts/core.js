@@ -4,6 +4,7 @@
  * -> Creates a method `adriel.makeForm` that helps working with forms and async within Alpine
  *
  * -> Creates an `api` object attached to the `window` superglobal
+ * -> Creates a method `api.fetch` that works like native `fetch` with default settings
  */
 (() => {
   window.adriel = {};
@@ -84,79 +85,26 @@
 
     return { ...defaultForm, ...alpineForm };
   };
-})();
 
-// Still before Alpine init
-(() => {
-  // AJAX Definitions
-  const url = '/a';
-
-  // AJAX Fetch Helpers
-  const _fetch = async (endpoint, params) => {
+  window.api = {};
+  window.api.root = '/a';
+  window.api.fetch = async (endpoint, params) => {
     const headers = params.headers || {};
 
     if (!params.isFile) headers['Content-Type'] = 'application/json';
 
-    let response = await fetch(`${url}${endpoint}`, {
+    const url = `${api.root}${endpoint}`;
+
+    let response = await fetch(url, {
       ...params,
       headers,
       credentials: 'include',
       body: !params.isFile ? JSON.stringify(params.body) : params.body,
     }).then((r) => r.json());
 
-    if (parseInt(response.code) > 300) response.failed = true;
+    if (parseInt(response.code) > 399) response.failed = true;
 
     return response;
-  };
-
-  // AJAX API
-  window.api = {};
-
-  // AUTH API
-  window.api.auth = {
-    //Login
-    login: async ({ email, password }) => {
-      const response = await _fetch('/login/credentials', {
-        method: 'POST',
-        body: { email, password },
-      });
-
-      if (response.failed) return false;
-
-      return response.content.user;
-    },
-
-    // Request a password reset code
-    requestPasswordReset: async (email) => {
-      await _fetch('/login/password-reset-requests', {
-        method: 'POST',
-        body: { email },
-      });
-    },
-
-    // Authenticate a password reset code
-    authenticatePasswordRequest: async (otp) => {
-      const response = await _fetch('/login/password-reset-otp', {
-        method: 'POST',
-        body: { otp },
-      });
-
-      if (response.failed) return false;
-
-      return true;
-    },
-
-    // Reset password
-    resetPassword: async (password) => {
-      const response = await _fetch('/login/password-reset', {
-        method: 'POST',
-        body: { password },
-      });
-
-      if (response.failed) return false;
-
-      return true;
-    },
   };
 })();
 

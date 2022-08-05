@@ -37,8 +37,6 @@
             $service = new Service();
             $service->set_table($this->table);
 
-            $is_session_auth = strtolower($this->type) === 'session';
-
             // Mechanism : Session
             if('session' === strtolower($this->type)) {
                 $is_logged = $req->session->get('logged', false);

@@ -6,7 +6,7 @@
      */
 ?>
 <template x-if="error === '<?= $params['key'] ?>'">
-    <div class="bg-red-50 border-l-4 border-red-400 p-4">
+    <div class="bg-red-50 p-4 rounded">
         <div class="flex">
             <div class="flex-shrink-0">
                 <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

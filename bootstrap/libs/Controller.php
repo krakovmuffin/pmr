@@ -15,7 +15,14 @@
             $this->adapters = [];
             $this->services = [];
             $this->thirdparties = [];
+
+            $this->load();
         }
+
+        /**
+         * Meant to be overriden
+         */
+        protected function load() {}
 
         /**
          * Adds an instance of Adapter to the internal list

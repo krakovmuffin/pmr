@@ -36,7 +36,7 @@
                 <script
                     type="application/javascript"
                     <?php if(empty($script['type']) || $script['type'] === 'internal'): ?>
-                        src="<?= front_asset_path('/scripts/' . $script['url']) ?>"
+                        src="<?= front_asset_path('/scripts' . $script['url']) ?>"
                     <?php elseif($script['type'] === 'external'): ?>
                         src="<?= $script['url'] ?>"
                     <?php endif; ?>

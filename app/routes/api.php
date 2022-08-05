@@ -6,5 +6,7 @@
             $this->use(native_mdw('json'));
             $this->use(native_mdw('form'));
             $this->use(native_mdw('signature'));
+
+            $this->mount(new R_Api_Login());
         }
     }

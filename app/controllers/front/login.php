@@ -6,7 +6,10 @@
             $res->render([
                 'title' => 'Sign In',
                 'slug' => 'sign-in',
-                'view' => '/pages/login/sign-in'
+                'view' => '/pages/login/sign-in',
+                'scripts' => [
+                    [ 'url' => '/pages/login/sign-in.js' ]
+                ]
             ]);
         }
     }

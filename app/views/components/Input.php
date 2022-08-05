@@ -41,7 +41,7 @@
             <?php if( isset($params['disabled']) && $params['disabled'] === true ): ?>
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm bg-gray-100"
             <?php else: ?>
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             <?php endif; ?>
 
             placeholder="<?= empty($params['placeholder']) ? ($params['label'] ?? '') : $params['placeholder'] ?>"
@@ -76,7 +76,7 @@
         <?php if ( $params['type'] === 'password' && isset($params['hint']) && $params['hint'] === true ): ?>
             <button 
                 type="button" 
-                class="cursor-pointer absolute inset-y-0 right-0 pl-3 pr-3 flex items-center text-gray-400 hover:text-black"
+                class="cursor-pointer absolute inset-y-0 right-0 pl-3 pr-3 flex items-center text-gray-400 hover:text-black focus:outline-teal-500"
                 x-on:click="show_password = !show_password"
             >
 
