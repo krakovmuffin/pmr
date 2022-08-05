@@ -31,7 +31,7 @@ CREATE TABLE jobs (
     report TEXT NULL DEFAULT NULL,
 
     scheduled_for TIMESTAMPTZ NULL DEFAULT NULL,
-    schedule_from TEXT NULL DEFAULT NULL,
+    schedule_from TIMESTAMPTZ NULL DEFAULT NULL,
     schedule_frequency TEXT NULL DEFAULT NULL,
 
     last_run_at TIMESTAMPTZ NULL DEFAULT NULL,
