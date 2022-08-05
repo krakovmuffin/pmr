@@ -27,7 +27,7 @@ document.addEventListener('alpine:init', () => {
           return;
         }
 
-        this.redirect(this);
+        this.redirect();
       },
     })
   );

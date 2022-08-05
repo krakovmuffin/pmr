@@ -50,6 +50,7 @@
                         class="space-y-6"
                         x-data="form()"
                         x-on:submit.prevent="submit"
+                        data-redirect="<?= front_path('/dashboard') ?>"
                     >
                         <?php
                             HC(

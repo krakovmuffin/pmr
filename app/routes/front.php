@@ -3,6 +3,10 @@
         protected function load() {
             $this->mount(new R_Front_Login());
 
+            $this->get('/dashboard', native_mdw('authentication'), function($req, $res) {
+                $res->send_success();
+            });
+
             // Default redirect
             $this->use(function($req, $res) {
                 $res->redirect(front_path('/sign-in'));
