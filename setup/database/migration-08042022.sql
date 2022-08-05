@@ -3,7 +3,9 @@ CREATE TABLE settings (
     pk INT GENERATED ALWAYS AS IDENTITY,
     name TEXT NOT NULL,
     type TEXT NOT NULL,
-    value TEXT NULL DEFAULT NULL
+    value TEXT NULL DEFAULT NULL,
+
+    PRIMARY KEY(pk)
 );
 
 -- default settings
