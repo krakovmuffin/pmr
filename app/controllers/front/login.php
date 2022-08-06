@@ -23,4 +23,16 @@
                 ]
             ]);
         }
+
+        public function page_verify_otp($req, $res) {
+            $res->render([
+                'title' => 'Verify OTP',
+                'slug' => 'verify-otp',
+                'view' => '/pages/login/verify-otp',
+                'scripts' => [
+                    [ 'url' => '/pages/login/verify-otp.js' ],
+                    [ 'url' => '/components/otp.js' ]
+                ]
+            ]);
+        }
     }

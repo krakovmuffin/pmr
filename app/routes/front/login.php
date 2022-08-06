@@ -7,7 +7,7 @@
 
             if(Options::get('PASSWORD_RESET_ENABLED')) {
                 $this->get('/request-password-reset', [$controller, 'page_request_password_reset']);
-                /* $this->get('/reset-password', [$controller, 'page_reset_password']); */
+                $this->get('/verify-otp', [$controller, 'page_verify_otp']);
             }
         }
     }
