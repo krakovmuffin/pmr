@@ -25,6 +25,9 @@
         }
 
         public function page_verify_otp($req, $res) {
+            if($req->session->get('otp_requested', false) !== true)
+                return $res->redirect(front_path('/sign-in'));
+
             $res->render([
                 'title' => 'Verify OTP',
                 'slug' => 'verify-otp',

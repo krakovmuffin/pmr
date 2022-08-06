@@ -50,6 +50,8 @@
             if(!Validator::is_valid_schema($payload, $schema))
                 return $res->send_malformed();
 
+            $req->session->set('otp_requested', true);
+
             if(!$this->services['users']->exists_one([ 'email' => $payload['email'] ]))
                 return $res->send_success();
 
@@ -57,7 +59,7 @@
             $req->session->set('user_email', $payload['email']);
             $req->session->set('user_otp', $otp);
 
-            Queue::schedule('Email_Otp')
+            Queue::schedule('Email_Password_Otp')
                 ->for('now')
                 ->with([ 'email' => $payload['email'] , 'otp' => $otp ])
                 ->persist();
@@ -84,7 +86,42 @@
                 return $res->send_unauthorized();
 
             $req->session->remove('user_otp');
+            $req->session->remove('otp_requested');
             $req->session->set('reset_password_authorized' , true);
+
+            return $res->send_success();
+        }
+
+        /**
+         * @route POST /reset-password
+         */
+        public function reset_password($req, $res) {
+            if($req->session->get('reset_password_authorized', false) !== true)
+                return $res->send_unauthorized();
+
+            $payload = $req->body;
+            $schema = [
+                'password' => [ 'required' , 'string', 'min_length:6' ],
+            ];
+
+            if(!Validator::is_valid_schema($payload, $schema))
+                return $res->send_malformed();
+
+            $email = $req->session->get('user_email');
+            $hash = password_hash($payload['password'], PASSWORD_BCRYPT);
+
+            $this->services['users']->find_and_update(
+                [ 'email' => $email ],
+                [ 'password' => $hash ]
+            );
+
+            $req->session->remove('user_email');
+            $req->session->remove('reset_password_authorized');
+
+            Queue::schedule('Email_Password_Reset')
+                ->for('now')
+                ->with([ 'email' => $email ])
+                ->persist();
 
             return $res->send_success();
         }
