@@ -5,11 +5,11 @@
      * -> email : string, the recipient
      * -> otp : string, the otp
      */
-    class J_Email_Otp extends Job {
+    class J_Email_Password_Otp extends Job {
         public function run($context) {
             $thirdparty = new NT_Emails();
 
-            $body = $thirdparty->render('otp', $context);
+            $body = $thirdparty->render('/password/otp', $context);
 
             $thirdparty->send([
                 'to' => $context['email'],
