@@ -33,4 +33,17 @@
                 substr($hash, 20, 12)
             );
         }
+
+        public static function OTP($length = 6) {
+            $alphabet = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            $password = "";
+
+            for ($i = 0; $i < $length; $i++) {
+                $random_index = rand(0, strlen($alphabet) - 1);
+                $password .= $alphabet[$random_index];
+            }
+
+            return $password;
+        }
+
     }
