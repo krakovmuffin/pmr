@@ -72,6 +72,12 @@
           }
         );
 
+        // Perform initial schema validation in case there are default values already
+        instance.ready = Iodine.isValidSchema(
+          instance.payload,
+          instance._schema
+        );
+
         /**
          * Define `redirect` method, that can, post-submit, redirect to
          * URL defined by `data-redirect=URL`
