@@ -38,6 +38,8 @@
 
                 $mail->From = Options::get('SMTP_FROM');
                 $mail->FromName = Options::get('SMTP_NAME');
+                vd(Options::get('SMTP_FROM'));
+                vd(Options::get('SMTP_HOST'));
 
                 $mail->addAddress($params['to']);
 

@@ -4,5 +4,6 @@
             $controller = new C_Api_Login();
 
             $this->post('/sign-in', [$controller, 'authenticate']);
+            $this->post('/request-password-reset', [$controller, 'send_otp']);
         }
     }

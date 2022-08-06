@@ -12,4 +12,15 @@
                 ]
             ]);
         }
+
+        public function page_request_password_reset($req, $res) {
+            $res->render([
+                'title' => 'Reset Password',
+                'slug' => 'request-password-reset',
+                'view' => '/pages/login/request-password-reset',
+                'scripts' => [
+                    [ 'url' => '/pages/login/request-password-reset.js' ]
+                ]
+            ]);
+        }
     }

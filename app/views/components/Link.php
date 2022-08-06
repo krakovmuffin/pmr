@@ -1,7 +1,7 @@
 <?php
     /**
      * Parameters :
-     * - size : string (2+ letters, Tailwind-ish, like in font-medium. -> medium <-)
+     * - size : string (2 letters, Tailwind-ish, like in text-sm. -> sm <-)
      * - href : string
      * - text : string
      * - type : string
@@ -18,13 +18,13 @@
     $size = $params['size'] ?? 'default';
     switch($size) {
         case 'default':
-            $class_size = 'font-medium';
+            $class_size = 'text-sm';
             break;
     }
 ?>
 <a 
     href="<?= $params['href'] ?>"
-    class="<?= $class_color ?> <?= $class_size ?>"
+    class="<?= $class_color ?> <?= $class_size ?> font-medium"
 > 
     <?= $params['text'] ?>
 </a>

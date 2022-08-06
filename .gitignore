@@ -9,3 +9,4 @@ uploads
 app/dependencies/
 !/app/dependencies/.gitkeep
 !/app/dependencies/readme.md
+private.*

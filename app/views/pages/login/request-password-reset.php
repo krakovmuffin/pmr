@@ -22,22 +22,12 @@
                 </div>
 
                 <h2 class="mt-6 text-3xl font-extrabold text-gray-900 text-center">
-                    <?= __('Welcome back') ?>
+                    <?= __('Reset your Password') ?>
                 </h2>
 
                 <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
                     <p class="mt-2 text-sm text-gray-600 text-center">
-                        <?= __('First time?') ?>
-                        <?php
-                            HC(
-                                'Link',
-                                [
-                                    'text' => __('Sign up to start managing your family!'),
-                                    'font' => 'medium',
-                                    'href' => '#'
-                                ]
-                            );
-                        ?>
+                        <?= __("If your email is found, we'll send you an email with a code") ?>
                     </p>
                 <?php endif; ?>
             </div>
@@ -50,7 +40,7 @@
                         class="space-y-6"
                         x-data="form()"
                         x-on:submit.prevent="submit"
-                        data-redirect="<?= front_path('/dashboard') ?>"
+                        data-redirect="<?= front_path('/verify-otp') ?>"
                     >
                         <?php
                             HC(
@@ -65,21 +55,10 @@
                             );
 
                             HC(
-                                'Input',
-                                [
-                                    'label' => __('Password'),
-                                    'name' => 'password',
-                                    'type' => 'password',
-                                    'hint' => true,
-                                    'required' => true,
-                                ]
-                            );
-
-                            HC(
                                 'FormError',
                                 [
                                     'key' => 'error',
-                                    'label' => __('Your credentials are wrong')
+                                    'label' => __('An error occurred')
                                 ]
                             );
 
@@ -91,21 +70,34 @@
                             );
                         ?>
 
-                        <?php if ( Options::get('PASSWORD_RESET_ENABLED') ): ?>
-                            <div class="flex items-center justify-center">
-                                <div class="text-sm">
-                                    <?php
-                                        HC(
-                                            'Link',
-                                            [
-                                                'text' => __('Forgot your password?'),
-                                                'href' => front_path('/request-password-reset')
-                                            ]
-                                        )
-                                    ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
+                        <div class="flex items-center justify-center">
+                            <span class="text-sm">
+                                <?= __('You may also want to') ?>&nbsp;
+                            </span>
+                            <?php
+                                HC(
+                                    'Link',
+                                    [
+                                        'text' => __('Sign in'),
+                                        'href' => front_path('/sign-in'),
+                                    ]
+                                )
+                            ?>
+                            <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
+                                <span class="text-sm">
+                                    &nbsp;<?= __('or') ?>&nbsp;
+                                </span>
+                                <?php
+                                    HC(
+                                        'Link',
+                                        [
+                                            'text' => __('Sign up'),
+                                            'href' => front_path('/sign-up'),
+                                        ]
+                                    )
+                                ?>
+                            <?php endif; ?>
+                        </div>
 
                     </form>
                 </div>
@@ -114,3 +106,4 @@
     </div>
 
 </div>
+

@@ -37,5 +37,31 @@
 
             $res->send_success();
         }
+
+        /**
+         * @route POST /request-passord-reset
+         */
+        public function send_otp($req, $res) {
+            $payload = $req->body;
+            $schema = [
+                'email' => [ 'required' , 'email' ],
+            ];
+
+            if(!Validator::is_valid_schema($payload, $schema))
+                return $res->send_malformed();
+
+            if(!$this->services['users']->exists_one([ 'email' => $payload['email'] ]))
+                return $res->send_success();
+
+            $otp = UUID::OTP();
+            $req->session->set('otp', $otp);
+
+            Queue::schedule('Email_Otp')
+                ->for('now')
+                ->with([ 'email' => $payload['email'] , 'otp' => $otp ])
+                ->persist();
+
+            return $res->send_success();
+        }
     }
 
