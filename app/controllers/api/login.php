@@ -54,12 +54,37 @@
                 return $res->send_success();
 
             $otp = UUID::OTP();
-            $req->session->set('otp', $otp);
+            $req->session->set('user_email', $payload['email']);
+            $req->session->set('user_otp', $otp);
 
             Queue::schedule('Email_Otp')
                 ->for('now')
                 ->with([ 'email' => $payload['email'] , 'otp' => $otp ])
                 ->persist();
+
+            return $res->send_success();
+        }
+
+        /**
+         * @route POST /verify-otp
+         */
+        public function verify_otp($req, $res) {
+            if(!$req->session->has('user_otp'))
+                return $res->send_unauthorized();
+
+            $payload = $req->body;
+            $schema = [
+                'otp' => [ 'required' , 'string', 'min_length:6', 'max_length:6' ],
+            ];
+
+            if(!Validator::is_valid_schema($payload, $schema))
+                return $res->send_malformed();
+
+            if($req->session->get('user_otp') !== $payload['otp'])
+                return $res->send_unauthorized();
+
+            $req->session->remove('user_otp');
+            $req->session->set('reset_password_authorized' , true);
 
             return $res->send_success();
         }

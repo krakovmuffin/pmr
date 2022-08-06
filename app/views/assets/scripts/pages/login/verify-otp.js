@@ -2,7 +2,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('form', () =>
     adriel.makeForm({
       _schema: {
-        email: ['required', 'email'],
+        otp: ['required', 'minLength:6', 'maxLength:6'],
       },
 
       init() {
@@ -15,7 +15,7 @@ document.addEventListener('alpine:init', () => {
         this.loading = true;
         this.error = null;
 
-        const response = await api.fetch('/request-password-reset', {
+        const response = await api.fetch('/verify-otp', {
           method: 'POST',
           body: this.payload,
         });

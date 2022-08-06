@@ -8,7 +8,9 @@
 ?>
 <div 
     class="flex align-center justify-center w-full space-x-5"
-        x-data="component_otp(<?= $params['length'] ?>)"
+    x-data="component_otp(<?= $params['length'] ?>)"
+    x-modelable="otp_value"
+    x-model="payload.<?= $params['name'] ?>"
 >
     <?php for($i = 0; $i < $params['length']; $i++): ?>
         <input 
@@ -22,6 +24,5 @@
             x-ref="otp_input_<?= $i + 1 ?>"
         />
     <?php endfor; ?>
-    <!-- TODO : Make work with payload.name field -->
 </div>
 

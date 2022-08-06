@@ -35,4 +35,18 @@
                 ]
             ]);
         }
+
+        public function page_reset_password($req, $res) {
+            if($req->session->get('reset_password_authorized', false) !== true)
+                return $res->redirect(front_path('/sign-in'));
+
+            $res->render([
+                'title' => 'Reset password',
+                'slug' => 'reset-password',
+                'view' => '/pages/login/reset-password',
+                'scripts' => [
+                    [ 'url' => '/pages/login/reset-password.js' ]
+                ]
+            ]);
+        }
     }

@@ -46,7 +46,6 @@
 
                 <div class="mt-6">
                     <form
-                        action="#"
                         class="space-y-6"
                         x-data="form()"
                         x-on:submit.prevent="submit"

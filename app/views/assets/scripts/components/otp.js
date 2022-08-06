@@ -17,6 +17,17 @@ document.addEventListener('alpine:init', () => {
 
       this.otp_value = new_otp_value;
 
+      // Trigger submit if the last input was filled
+      if (
+        input.value &&
+        input.getAttribute('x-ref') === `otp_input_${this.otp_length}`
+      ) {
+        // This has to be run after input validation, hence the timeout
+        setTimeout(() => {
+          document.querySelector('form button[type="submit"]').click();
+        }, 250);
+      }
+
       // Focus the next input when possible
       if (!input.nextElementSibling || !input.value) return;
 
@@ -46,9 +57,22 @@ document.addEventListener('alpine:init', () => {
       if (paste.length >= this.otp_length) document.activeElement.blur();
       // Focus the next input when paste is too short to fill everything
       else this.$refs[`otp_input_${paste.length + 1}`].focus();
+
+      // Auto-submit if input is full
+      if (paste.length >= this.otp_length)
+        setTimeout(() => {
+          document.querySelector('form button[type="submit"]').click();
+        }, 250);
     },
 
     handleBackspace(index) {
+      const current = this.$refs[`otp_input_${index + 1}`];
+
+      if (current.value) {
+        current.value = '';
+        return;
+      }
+
       const previous = this.$refs[`otp_input_${index}`];
 
       if (!previous) document.activeElement.blur();

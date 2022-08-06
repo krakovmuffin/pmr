@@ -5,5 +5,6 @@
 
             $this->post('/sign-in', [$controller, 'authenticate']);
             $this->post('/request-password-reset', [$controller, 'send_otp']);
+            $this->post('/verify-otp', [$controller, 'verify_otp']);
         }
     }
