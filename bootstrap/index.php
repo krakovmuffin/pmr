@@ -2,7 +2,7 @@
     /**
      * External Dependencies
      */
-    require_once __DIR__ . '/../app/dependencies/autoload.php';
+    require __DIR__ . '/../app/dependencies/autoload.php';
 
     /**
      * Local Autoloader
