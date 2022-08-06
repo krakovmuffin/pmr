@@ -5,19 +5,26 @@
         exit();
     }
 
+    /**
+     * External Dependencies
+     */
+    require __DIR__ . '/../../app/dependencies/autoload.php';
+
+    /**
+     * Local Autoloader
+     */
     require __DIR__ . '/../autoloader.php';
+
+    /**
+     * Global syntactic sugars
+     */
+    require __DIR__ . '/../libs/sugar.php';
 
     // Configuration retrieval
     Options::load(__DIR__ . "/../../configuration/.custom.env");
 
     // Database setup
     Database::load();
-
-    /* Queue::schedule('OptimizeStuff') */
-    /*     ->every(5, 'mins') */
-    /*     ->from('now') */
-    /*     ->persist(); */
-    /* exit(); */
 
     // Entrypoint
     // ----------
@@ -29,8 +36,6 @@
 
     $now = time();
     foreach($jobs as $job) {
-        echo 'Job ' . $job['pk'] . ' : ';
-
         $class = 'J_' . $job['class'];
         $instance = new $class();
 
