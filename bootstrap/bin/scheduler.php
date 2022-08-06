@@ -26,6 +26,12 @@
     // Database setup
     Database::load();
 
+    /**
+     * Retrieve extra settings from database, if enabled
+     */
+    if(Options::get('EXTRA_SETTINGS_ENABLED'))
+        Options::load_from_database();
+
     // Entrypoint
     // ----------
     $service = new NS_Jobs();
