@@ -15,6 +15,7 @@
          * @return {string} The result of calling `include partial.php` into a string
          */
         public static function partial($key, $params = []) {
+            $key = strtolower($key);
             ob_start();
             include __DIR__ . "/../../app/views/partials/$key.php";
             $output = ob_get_clean();
@@ -30,6 +31,7 @@
          * @return {string} The result of calling `include layout.php` into a string
          */
         public static function layout($key, $params = []) {
+            $key = strtolower($key);
             ob_start();
             include __DIR__ . "/../../app/views/layouts/$key.php";
             $output = ob_get_clean();
@@ -45,6 +47,7 @@
          * @return {string} The result of calling `include partial.php` into a string
          */
         public static function component($key, $params = []) {
+            $key = strtolower($key);
             ob_start();
             include __DIR__ . "/../../app/views/components/$key.php";
             $output = ob_get_clean();
