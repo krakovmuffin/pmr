@@ -6,7 +6,7 @@
     class NT_Emails {
         public function render($key, $params = []) {
             ob_start();
-            include __DIR__ . "/../../app/views/emails/$key.php";
+            include __DIR__ . "/../../app/views/emails" . $key . ".php";
             $output = ob_get_clean();
             return $output;
         }
@@ -38,8 +38,6 @@
 
                 $mail->From = Options::get('SMTP_FROM');
                 $mail->FromName = Options::get('SMTP_NAME');
-                vd(Options::get('SMTP_FROM'));
-                vd(Options::get('SMTP_HOST'));
 
                 $mail->addAddress($params['to']);
 
