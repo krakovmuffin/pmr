@@ -13,7 +13,7 @@
             $payload = $req->body;
             $schema = [
                 'email' => [ 'required' , 'email' ],
-                'password' => [ 'required' , 'string' ]
+                'password' => [ 'required' , 'string' , 'min_length:6' ]
             ];
 
             if(!Validator::is_valid_schema($payload, $schema))
@@ -50,14 +50,18 @@
             if(!Validator::is_valid_schema($payload, $schema))
                 return $res->send_malformed();
 
-            $req->session->set('otp_requested', true);
+            $req->session->set('otp_reset_enabled', true);
 
             if(!$this->services['users']->exists_one([ 'email' => $payload['email'] ]))
                 return $res->send_success();
 
             $otp = UUID::OTP();
             $req->session->set('user_email', $payload['email']);
-            $req->session->set('user_otp', $otp);
+
+            $this->services['users']->find_and_update(
+                [ 'email' => $payload['email'] ],
+                [ 'otp' => $otp ]
+            );
 
             Queue::schedule('Email_Password_Otp')
                 ->for('now')
@@ -71,9 +75,10 @@
          * @route POST /verify-otp
          */
         public function verify_otp($req, $res) {
-            if(!$req->session->has('user_otp'))
+            if(!$req->session->has('user_email'))
                 return $res->send_unauthorized();
 
+            $email = $req->session->get('user_email');
             $payload = $req->body;
             $schema = [
                 'otp' => [ 'required' , 'string', 'min_length:6', 'max_length:6' ],
@@ -82,12 +87,28 @@
             if(!Validator::is_valid_schema($payload, $schema))
                 return $res->send_malformed();
 
-            if($req->session->get('user_otp') !== $payload['otp'])
+            if(!$this->services['users']->exists_one([ 'email' => $email, 'otp' => $payload['otp'] ]))
                 return $res->send_unauthorized();
 
-            $req->session->remove('user_otp');
-            $req->session->remove('otp_requested');
-            $req->session->set('reset_password_authorized' , true);
+            $this->services['users']->find_and_update(
+                [ 'email' => $email ],
+                [ 'otp' => '[NULL]' ]
+            );
+
+            // Allow Password Reset if it's the current scenario
+            if($req->session->get('otp_reset_enabled') === true)
+                $req->session->set('reset_password_authorized' , true);
+
+            // Auto-login if the current scenario is registration
+            if($req->session->get('otp_registration_enabled') === true) {
+                $user = $this->services['users']->find_one([ 'email' => $email ]);
+                $req->session->set('logged', true);
+                $req->session->set('user_id', $user['pk']);
+            }
+
+            $req->session->remove('otp_reset_enabled');
+            $req->session->remove('otp_registration_enabled');
+            $req->session->remove('user_email');
 
             return $res->send_success();
         }
@@ -96,7 +117,7 @@
          * @route POST /reset-password
          */
         public function reset_password($req, $res) {
-            if($req->session->get('reset_password_authorized', false) !== true)
+            if($req->session->get('reset_password_authorized') !== true)
                 return $res->send_unauthorized();
 
             $payload = $req->body;
@@ -122,6 +143,48 @@
                 ->for('now')
                 ->with([ 'email' => $email ])
                 ->persist();
+
+            return $res->send_success();
+        }
+
+        /**
+         * @route POST /sign-up
+         */
+        public function sign_up($req, $res) {
+            $payload = $req->body;
+            $schema = [
+                'email' => [ 'required' , 'email', 'unique:users' ],
+                'password' => [ 'required' , 'string' , 'min_length:6' ],
+                'language' => [ 'required' , 'string' , 'in:' . join(',', i18n::get_supported_locales()) ],
+                'date_of_birth' => [ 'required' , 'date' ],
+                'name' => [ 'required' , 'string' , 'min_length:3' ]
+            ];
+
+            if(!Validator::is_valid_schema($payload, $schema)) {
+                $errors = Validator::troubleshoot_schema($payload, $schema);
+
+                return $res->send_malformed([
+                    'content' => [
+                        'errors' => $errors
+                    ]
+                ]);
+            }
+
+            Validator::enforce_schema($payload, $schema);
+
+            $otp = UUID::OTP();
+            $payload['otp'] = $otp;
+            $payload['power'] = 'FAMILY_MANAGER';
+            $payload['password'] = password_hash($payload['password'], PASSWORD_BCRYPT);
+            $this->services['users']->create($payload);
+
+            $req->session->set('otp_registration_enabled', true);
+            $req->session->set('user_email', $payload['email']);
+
+            Queue::schedule('Email_Registration_Otp')
+                   ->for('now')
+                   ->with([ 'email' => $payload['email'] , 'otp' => $otp ])
+                   ->persist();
 
             return $res->send_success();
         }

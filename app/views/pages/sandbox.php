@@ -1,1 +1,1 @@
-<?php vd(UUID::otp()); ?>
+<?php vd(session_save_path()); ?>

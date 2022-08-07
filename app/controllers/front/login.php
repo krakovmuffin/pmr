@@ -25,8 +25,13 @@
         }
 
         public function page_verify_otp($req, $res) {
-            if($req->session->get('otp_requested', false) !== true)
+            if(
+                $req->session->get('otp_reset_enabled') !== true
+                && $req->session->get('otp_registration_enabled') !== true
+            )
                 return $res->redirect(front_path('/sign-in'));
+
+            $scenario = $req->session->get('otp_reset_enabled') === true ? 'reset' : 'registration';
 
             $res->render([
                 'title' => 'Verify OTP',
@@ -35,7 +40,8 @@
                 'scripts' => [
                     [ 'url' => '/pages/login/verify-otp.js' ],
                     [ 'url' => '/components/otp.js' ]
-                ]
+                ],
+                'context' => [ 'scenario' => $scenario ]
             ]);
         }
 

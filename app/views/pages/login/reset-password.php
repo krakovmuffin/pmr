@@ -66,7 +66,7 @@
                                 'FormSuccess',
                                 [
                                     'key' => 'success',
-                                    'label' => __('Your password was changed, you will soon be redirected to log in')
+                                    'label' => __('Your password was changed, you will soon be redirected to sign in')
                                 ]
                             );
 

@@ -39,9 +39,13 @@
                         class="space-y-6"
                         x-data="form()"
                         x-on:submit.prevent="submit"
-                        data-redirect="<?= front_path('/dashboard') ?>"
+                        data-redirect="<?= front_path('/verify-otp') ?>"
                     >
-                        <div class="flex flex-col" x-data="{ step: 1,  stepCount: 4 }">
+                        <div 
+                            class="flex flex-col" 
+                            x-data="{ step: 1,  stepCount: 4 }"
+                            x-on:keydown.enter="if(step < stepCount) $refs[`submit_step_${step}`].click()"
+                        >
 
                             <!-- STEP 1 : name -->
                             <template x-if="step === 1">
@@ -62,7 +66,8 @@
                                             'StepButton',
                                             [
                                                 'text' => __('Continue'),
-                                                'condition' => 'payload.name && payload.name.length >= 3'
+                                                'condition' => 'payload.name && payload.name.length >= 3',
+                                                'step' => 1
                                             ]
                                         );
                                     ?>
@@ -87,42 +92,104 @@
                                             'StepButton',
                                             [
                                                 'text' => __('Continue'),
-                                                'condition' => "payload.date_of_birth !== ''"
+                                                'condition' => "payload.date_of_birth && payload.date_of_birth !== ''",
+                                                'step' => 2
                                             ]
                                         );
                                     ?>
                                 </div>
                             </template>
 
-                            <div class="mt-2 w-full h-1.5 bg-gray-100 rounded">
-                                <div 
-                                    class="h-full bg-teal-500 rounded transition-width duration-300 ease-in-out"
-                                    x-bind:style="`width: ${(step / stepCount) * 100}%`"
-                                ></div>
-                            </div>
+                            <!-- STEP 3 : language -->
+                            <template x-if="step === 3">
+                                <div class="space-y-4">
+                                    <?php
+                                        HC(
+                                            'Select',
+                                            [
+                                                'label' => __('What is your preferred language?'),
+                                                'name' => 'language',
+                                                'prompt' => __('Pick one'),
+                                                'options' => array_combine(
+                                                    i18n::get_supported_locales(),
+                                                    array_map(function($l) { return __($l); }, i18n::get_supported_locales())
+                                                )
+                                                ,
+                                                'required' => true
+                                            ]
+                                        );
+
+                                        HC(
+                                            'StepButton',
+                                            [
+                                                'text' => __('Continue'),
+                                                'condition' => "payload.language && payload.language !== ''",
+                                                'step' => 3
+                                            ]
+                                        );
+                                    ?>
+                                </div>
+                            </template>
+
+                            <!-- STEP 4 : credentials -->
+                            <template x-if="step === 4">
+                                <div class="space-y-4">
+                                    <?php
+                                        HC(
+                                            'Input',
+                                            [
+                                                'label' => __('Email address'),
+                                                'type' => 'email',
+                                                'name' => 'email',
+                                                'placeholder' => 'john.doe@gmail.com',
+                                                'required' => true
+                                            ]
+                                        );
+
+                                        HC(
+                                            'Input',
+                                            [
+                                                'label' => __('Password'),
+                                                'type' => 'password',
+                                                'name' => 'password',
+                                                'placeholder' => 'Use a strong and secure password',
+                                                'required' => true
+                                            ]
+                                        );
+                                    ?>
+                                </div>
+                            </template>
 
 
-                            <!-- SUBMIT ZONE -->
+                            <!-- FINAL SUBMIT ZONE -->
                             <div 
-                                class="flex flex-col"
+                                class="flex flex-col mt-4 gap-y-4"
                                 x-bind:class="{ hidden: step < stepCount }"
                             >
                                 <?php
                                     HC(
                                         'FormError',
                                         [
-                                            'key' => 'error',
-                                            'label' => __('Your credentials are wrong')
+                                            'key' => 'email',
+                                            'label' => __('This email address is taken already')
                                         ]
                                     );
 
                                     HC(
                                         'FormButton',
                                         [
-                                            'text' => __('Submit'),
+                                            'text' => __('Create your account'),
                                         ]
                                     );
                                 ?>
+                            </div>
+
+                            <!-- PROGRESS -->
+                            <div class="mt-2 w-full h-1.5 bg-gray-100 rounded">
+                                <div 
+                                    class="h-full bg-teal-500 rounded transition-width duration-300 ease-in-out"
+                                    x-bind:style="`width: ${(step / stepCount) * 100}%`"
+                                ></div>
                             </div>
                         </div>
 

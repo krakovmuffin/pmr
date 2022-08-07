@@ -39,7 +39,7 @@
                         class="space-y-6"
                         x-data="form()"
                         x-on:submit.prevent="submit"
-                        data-redirect="<?= front_path('/reset-password') ?>"
+                        data-redirect="<?= front_path( ($context['scenario'] === 'reset') ? '/reset-password' : '/dashboard') ?>"
                     >
                         <?php
                             HC(
@@ -80,7 +80,7 @@
                                 ]
                             )
                         ?>
-                        <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
+                        <?php if ( Options::get('REGISTRATION_ENABLED') && $context['scenario'] !== 'registration' ): ?>
                             <span class="text-sm">
                                 &nbsp;<?= __('or') ?>&nbsp;
                             </span>
