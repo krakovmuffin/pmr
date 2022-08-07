@@ -6,7 +6,7 @@ CREATE TABLE users (
     password TEXT NOT NULL,
     power TEXT NOT NULL,
     language TEXT NOT NULL,
-    date_of_birth TIMESTAMPTZ NOT NULL,
+    date_of_birth DATE NOT NULL,
 
     PRIMARY KEY(pk)
 );
