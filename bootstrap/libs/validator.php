@@ -21,6 +21,8 @@
         public static function is_regex($value, $r) { return is_string($value) && preg_match($r, $value); }
         public static function is_email($value) { return filter_var($value, FILTER_VALIDATE_EMAIL) !== false; }
 
+        public static function is_date($value) { return preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) == true; }
+
         public static function is_in($value, $a) { return in_array($value, explode(',', $a)); }
         public static function is_not_in($value, $a) { return !self::is_in($value, $a); }
 
