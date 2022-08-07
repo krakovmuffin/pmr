@@ -41,7 +41,7 @@
             $now = time();
             $later = $now + strtotime($interval, 0);
 
-            $this->scheduled_for = $later;
+            $this->scheduled_for = date('c', $later);
             $this->is_exclusive = true;
 
             return $this;
