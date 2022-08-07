@@ -1,4 +1,4 @@
--- users
+- users
 CREATE TABLE users (
     pk INT GENERATED ALWAYS AS IDENTITY,
     name TEXT NOT NULL,
@@ -7,6 +7,8 @@ CREATE TABLE users (
     power TEXT NOT NULL,
     language TEXT NOT NULL,
     date_of_birth DATE NOT NULL,
+    otp TEXT NULL DEFAULT NULL,
+    verified BOOLEAN NOT NULL DEFAULT FALSE,
 
     PRIMARY KEY(pk)
 );
