@@ -69,7 +69,7 @@
         /**
          * Returns the list of supported locales in the internal library
          * 
-         * @return {array<string} The list of short locales (en, it)
+         * @return {array<string>} The list of short locales (en, it)
          */
         public static function get_supported_locales() {
             return self::$supported_locales;
