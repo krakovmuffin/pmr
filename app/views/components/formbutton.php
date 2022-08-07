@@ -4,7 +4,6 @@
      * - type : string
      * - native : boolean (whether to use Alpine or not)
      * - text : string
-     * - type : string
      */
 ?>
 <?php 
