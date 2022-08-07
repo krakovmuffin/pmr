@@ -195,6 +195,11 @@
                    ->with([ 'email' => $payload['email'] , 'otp' => $otp ])
                    ->persist();
 
+            Queue::schedule('Clear_Otp')
+                ->in('15 minutes')
+                ->with([ 'email' => $payload['email'] ])
+                ->persist();
+
             return $res->send_success();
         }
     }
