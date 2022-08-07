@@ -14,7 +14,7 @@
 >
     <?php for($i = 0; $i < $params['length']; $i++): ?>
         <input 
-            class="text-center appearance-none block w-10 h-10 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-lg"
+            class="p-0 text-center appearance-none block w-10 h-10 border border-gray-300 rounded placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-lg"
             type="text" 
             maxlength="1"
             placeholder="0"
