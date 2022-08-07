@@ -37,6 +37,16 @@
             return $this;
         }
 
+        public function in($interval) {
+            $now = time();
+            $later = $now + strtotime($interval, 0);
+
+            $this->scheduled_for = $later;
+            $this->is_exclusive = true;
+
+            return $this;
+        }
+
         public function every($frequency) {
             $this->schedule_frequency = $frequency;
 
