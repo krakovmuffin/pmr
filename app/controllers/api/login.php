@@ -19,7 +19,7 @@
             if(!Validator::is_valid_schema($payload, $schema))
                 return $res->send_malformed();
 
-            if(!$this->services['users']->exists_one([ 'email' => $payload['email'] ]))
+            if(!$this->services['users']->exists_one([ 'email' => $payload['email'] , 'verified' => true ]))
                 return $res->send_unauthorized();
 
             $user = $this->services['users']->find_one([ 'email' => $payload['email'] ]);
@@ -52,7 +52,8 @@
 
             $req->session->set('otp_reset_enabled', true);
 
-            if(!$this->services['users']->exists_one([ 'email' => $payload['email'] ]))
+            // Send success even when account doesn't exist, to prevent account identification
+            if(!$this->services['users']->exists_one([ 'email' => $payload['email'] , 'verified' => true ]))
                 return $res->send_success();
 
             $otp = UUID::OTP();
@@ -66,6 +67,11 @@
             Queue::schedule('Email_Password_Otp')
                 ->for('now')
                 ->with([ 'email' => $payload['email'] , 'otp' => $otp ])
+                ->persist();
+
+            Queue::schedule('Clear_Otp')
+                ->in('15 minutes')
+                ->with([ 'email' => $payload['email'] ])
                 ->persist();
 
             return $res->send_success();
@@ -90,6 +96,7 @@
             if(!$this->services['users']->exists_one([ 'email' => $email, 'otp' => $payload['otp'] ]))
                 return $res->send_unauthorized();
 
+            // Reset the OTP
             $this->services['users']->find_and_update(
                 [ 'email' => $email ],
                 [ 'otp' => '[NULL]' ]
@@ -99,16 +106,18 @@
             if($req->session->get('otp_reset_enabled') === true)
                 $req->session->set('reset_password_authorized' , true);
 
-            // Auto-login if the current scenario is registration
+            // Auto-login and active the account if the current scenario is registration
             if($req->session->get('otp_registration_enabled') === true) {
-                $user = $this->services['users']->find_one([ 'email' => $email ]);
+                $user = $this->services['users']->find_and_update(
+                    [ 'email' => $email ],
+                    [ 'verified' => true ]
+                )[0];
                 $req->session->set('logged', true);
                 $req->session->set('user_id', $user['pk']);
             }
 
             $req->session->remove('otp_reset_enabled');
             $req->session->remove('otp_registration_enabled');
-            $req->session->remove('user_email');
 
             return $res->send_success();
         }
