@@ -52,4 +52,15 @@
                 ]
             ]);
         }
+
+        public function page_sign_up($req, $res) {
+            $res->render([
+                'title' => 'Sign Up',
+                'slug' => 'sign-up',
+                'view' => '/pages/login/sign-up',
+                'scripts' => [
+                    [ 'url' => '/pages/login/sign-up.js' ]
+                ]
+            ]);
+        }
     }

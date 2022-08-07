@@ -10,5 +10,9 @@
                 $this->get('/verify-otp', [$controller, 'page_verify_otp']);
                 $this->get('/reset-password', [$controller, 'page_reset_password']);
             }
+
+            if(Options::get('REGISTRATION_ENABLED')) {
+                $this->get('/sign-up', [$controller, 'page_sign_up']);
+            }
         }
     }
