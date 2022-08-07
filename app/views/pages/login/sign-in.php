@@ -34,7 +34,7 @@
                                 [
                                     'text' => __('Sign up to start managing your family!'),
                                     'font' => 'medium',
-                                    'href' => '#'
+                                    'href' => front_path('/sign-up')
                                 ]
                             );
                         ?>
@@ -90,23 +90,22 @@
                             );
                         ?>
 
-                        <?php if ( Options::get('PASSWORD_RESET_ENABLED') ): ?>
-                            <div class="flex items-center justify-center">
-                                <div class="text-sm">
-                                    <?php
-                                        HC(
-                                            'Link',
-                                            [
-                                                'text' => __('Forgot your password?'),
-                                                'href' => front_path('/request-password-reset')
-                                            ]
-                                        )
-                                    ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
                     </form>
+                    <?php if ( Options::get('PASSWORD_RESET_ENABLED') ): ?>
+                        <div class="mt-6 flex items-center justify-center">
+                            <div class="text-sm">
+                                <?php
+                                    HC(
+                                        'Link',
+                                        [
+                                            'text' => __('Forgot your password?'),
+                                            'href' => front_path('/request-password-reset')
+                                        ]
+                                    )
+                                ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

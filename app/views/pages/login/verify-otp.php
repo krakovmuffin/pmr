@@ -65,37 +65,36 @@
                                 ]
                             );
                         ?>
+                    </form>
 
-                        <div class="flex items-center justify-center">
+                    <div class="mt-6 flex items-center justify-center">
+                        <span class="text-sm">
+                            <?= __('You may also want to') ?>&nbsp;
+                        </span>
+                        <?php
+                            HC(
+                                'Link',
+                                [
+                                    'text' => __('Sign in'),
+                                    'href' => front_path('/sign-in'),
+                                ]
+                            )
+                        ?>
+                        <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
                             <span class="text-sm">
-                                <?= __('You may also want to') ?>&nbsp;
+                                &nbsp;<?= __('or') ?>&nbsp;
                             </span>
                             <?php
                                 HC(
                                     'Link',
                                     [
-                                        'text' => __('Sign in'),
-                                        'href' => front_path('/sign-in'),
+                                        'text' => __('Sign up'),
+                                        'href' => front_path('/sign-up'),
                                     ]
                                 )
                             ?>
-                            <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
-                                <span class="text-sm">
-                                    &nbsp;<?= __('or') ?>&nbsp;
-                                </span>
-                                <?php
-                                    HC(
-                                        'Link',
-                                        [
-                                            'text' => __('Sign up'),
-                                            'href' => front_path('/sign-up'),
-                                        ]
-                                    )
-                                ?>
-                            <?php endif; ?>
-                        </div>
-
-                    </form>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
