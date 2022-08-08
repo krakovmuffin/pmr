@@ -29,6 +29,13 @@ confirm() {
     echo $confirmed
 }
 
+# Array to string
+join () {
+  local IFS="$1"
+  shift
+  echo "$*"
+}
+
 # Entrypoint
 echo "--"
 
@@ -40,7 +47,7 @@ echo "Gathering translation calls"
 
 echo "--"
 
-translations=$(find ./app/views/ -type f -exec grep -E "__\(.+\)" -o {} \;  | tr -d "_()'\"[]$"  | grep -E "[a-zA-Z %]+[^$]")
+translations=$(find ./app/views/ -type f -exec grep -E "__\('.+'\)" -o {} \; | sed -E "s/__\('(.+)'\)/\1/g")
 translations_count="$( echo "$translations" | wc -l | tr -d ' ')"
 
 echo "$translations_count translations found"
@@ -55,6 +62,7 @@ fi
 
 output="$translation_code.php"
 
+# Prevent overriding existing translation
 if [ -f "$dir/$output" ]; then
     echo "--"
     echo "This translation exists already"
@@ -63,12 +71,29 @@ fi
 
 echo "--"
 
-# TODO
+# Build PHP translation lines (associative array key<->value list)
+new_translations=("\"$translation_code\" => \"\"")
 while IFS= read -r line; do
-    echo $line
-    read -p "ok ? " x
-done < "$translations"
+    new_translations+=("\"$line\" => \"\"")
+done <<< "$translations"
 
+# Build PHP Translation File content
+new_translation_file_content=$(cat <<- EOF
+    <?php
+        I18n::append_translation('$translation_code',
+            [
+                $(
+                    for t in "${new_translations[@]}"; do 
+                        printf "$t,\n\t\t\t\t";
+                    done
+                )
+            ]
+        );
+EOF
+)
+
+# Store new translation into a file
+echo "$new_translation_file_content" | sed '/^[[:space:]]*$/d' > "$dir/$output"
 # has_confirmed=$(confirm "Should we automatically add this translation to the loaded ones ? (Y/N) ")
 # should_append_translation=$has_confirmed
 
