@@ -3,6 +3,10 @@
     class C_Front_Login extends Controller {
 
         public function page_sign_in($req, $res) {
+            // Auto-redirect when logged
+            if($req->session->get('logged', true))
+                return $res->redirect(front_path('/dashboard'));
+
             $res->render([
                 'title' => 'Sign In',
                 'slug' => 'sign-in',
@@ -14,6 +18,10 @@
         }
 
         public function page_request_password_reset($req, $res) {
+            // Auto-redirect when logged
+            if($req->session->get('logged', true))
+                return $res->redirect(front_path('/dashboard'));
+
             $res->render([
                 'title' => 'Reset Password',
                 'slug' => 'request-password-reset',
@@ -25,6 +33,10 @@
         }
 
         public function page_verify_otp($req, $res) {
+            // Auto-redirect when logged
+            if($req->session->get('logged', true))
+                return $res->redirect(front_path('/dashboard'));
+
             if(
                 $req->session->get('otp_reset_enabled') !== true
                 && $req->session->get('otp_registration_enabled') !== true
@@ -46,6 +58,10 @@
         }
 
         public function page_reset_password($req, $res) {
+            // Auto-redirect when logged
+            if($req->session->get('logged', true))
+                return $res->redirect(front_path('/dashboard'));
+
             if($req->session->get('reset_password_authorized', false) !== true)
                 return $res->redirect(front_path('/sign-in'));
 
