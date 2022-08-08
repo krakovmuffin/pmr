@@ -4,7 +4,7 @@
 
         public function page_sign_in($req, $res) {
             // Auto-redirect when logged
-            if($req->session->get('logged', true))
+            if($req->session->get('logged') ===  true)
                 return $res->redirect(front_path('/dashboard'));
 
             $res->render([
@@ -19,7 +19,7 @@
 
         public function page_request_password_reset($req, $res) {
             // Auto-redirect when logged
-            if($req->session->get('logged', true))
+            if($req->session->get('logged') ===  true)
                 return $res->redirect(front_path('/dashboard'));
 
             $res->render([
@@ -34,7 +34,7 @@
 
         public function page_verify_otp($req, $res) {
             // Auto-redirect when logged
-            if($req->session->get('logged', true))
+            if($req->session->get('logged') ===  true)
                 return $res->redirect(front_path('/dashboard'));
 
             if(
@@ -59,7 +59,7 @@
 
         public function page_reset_password($req, $res) {
             // Auto-redirect when logged
-            if($req->session->get('logged', true))
+            if($req->session->get('logged') ===  true)
                 return $res->redirect(front_path('/dashboard'));
 
             if($req->session->get('reset_password_authorized', false) !== true)
