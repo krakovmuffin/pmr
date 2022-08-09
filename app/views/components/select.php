@@ -52,6 +52,7 @@
 
         <?php if ( !isset($params['native']) || $params['native'] === false ): ?>
             x-model="payload.<?= $params['name'] ?>"
+            x-bind:class="{ 'text-gray-400': !payload.<?= $params['name'] ?>  }"
         <?php endif; ?>
     >
 
