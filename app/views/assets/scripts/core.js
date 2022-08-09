@@ -5,6 +5,7 @@
  *
  * -> Creates an `api` object attached to the `window` superglobal
  * -> Creates a method `api.fetch` that works like native `fetch` with default settings
+ *
  */
 (() => {
   window.adriel = {};
@@ -132,5 +133,12 @@ window.addEventListener('load', () => {
         window.location = nodes[i].getAttribute('data-href');
       });
     }
+  })();
+
+  /**
+   * Appends an "quals" rule to Iodine
+   */
+  (() => {
+    Iodine.addRule('equals', (value, param) => value == param);
   })();
 });
