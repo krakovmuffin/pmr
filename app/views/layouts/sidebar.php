@@ -4,7 +4,8 @@
             'link' => front_path('/dashboard'),
             'label' => __('Home'),
             'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /> </svg>',
-            'available_to' => [ 'FAMILY_MANAGER' ]
+            'available_to' => [ 'FAMILY_MANAGER' ],
+            'should_exact_match' => true
         ],
         [
             'link' => front_path('/dashboard/family'),
@@ -167,7 +168,21 @@
                     <?php foreach($menu as $route): ?>
                         <a 
                             href="<?= $route['link'] ?>" 
-                            class="text-teal-100 hover:bg-teal-800 hover:text-white group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium"
+
+                            <?php 
+                                $is_active = false; 
+
+                                if ( isset($route['should_exact_match'] ) && $route['should_exact_match'] )
+                                    $is_active = $route['link'] === $params['current_path'];
+                                else
+                                    $is_active = str_starts_with($params['current_path'], $route['link']); 
+                            ?>
+
+                            <?php if ( $is_active  ): ?>
+                                class="text-teal-100 bg-teal-800 text-white group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium"
+                            <?php else: ?>
+                                class="text-teal-100 hover:bg-teal-800 hover:text-white group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium"
+                            <?php endif; ?>
                         >
                             <div class="h-6 w-6 flex justify-center items-center">
                                 <?= $route['icon'] ?>
