@@ -16,58 +16,129 @@
 
                     <!-- PANEL : SMTP -->
                     <section>
-                        <form action="#" method="POST">
+                        <form 
+                            action="#" 
+                            method="POST"
+                            x-data="form()"
+                        >
                             <div class="shadow sm:rounded-md sm:overflow-hidden">
                                 <div class="bg-white py-6 px-4 sm:p-6">
+                                    <!-- PANEL HEADING -->
                                     <div>
                                         <h2 class="text-lg leading-6 font-medium text-gray-900"><?= __('SMTP') ?></h2>
-                                        <p class="mt-1 text-sm text-gray-500"><?= __("Set up and verify your credentials to make sure that automatic emails can bet sent") ?></p>
+                                        <p class="mt-1 text-sm text-gray-500"><?= __("Set up and verify your credentials to make sure that all emails can bet sent") ?></p>
                                     </div>
 
+                                    <!-- PANEL BODY -->
                                     <div class="mt-6 grid grid-cols-4 gap-6">
+
+                                        <!-- 1ST ROW -->
                                         <div class="col-span-4 sm:col-span-2">
-                                            <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-                                            <input type="text" name="first-name" id="first-name" autocomplete="cc-given-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                        </div>
-
-                                        <div class="col-span-4 sm:col-span-2">
-                                            <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-                                            <input type="text" name="last-name" id="last-name" autocomplete="cc-family-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                        </div>
-
-                                        <div class="col-span-4 sm:col-span-2">
-                                            <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-                                            <input type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                        </div>
-
-                                        <div class="col-span-4 sm:col-span-1">
-                                            <label for="expiration-date" class="block text-sm font-medium text-gray-700">Expration date</label>
-                                            <input type="text" name="expiration-date" id="expiration-date" autocomplete="cc-exp" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm" placeholder="MM / YY">
-                                        </div>
-
-                                        <div class="col-span-4 sm:col-span-1">
-                                            <label for="security-code" class="flex items-center text-sm font-medium text-gray-700">
-                                                <span>Security code</span>
-                                                <!-- Heroicon name: solid/question-mark-circle -->
-                                                <svg class="ml-1 flex-shrink-0 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                                                </svg>
-                                            </label>
-                                            <input type="text" name="security-code" id="security-code" autocomplete="cc-csc" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                            <?php
+                                                HC(
+                                                    'Input',
+                                                    [
+                                                        'type' => 'text',
+                                                        'name' => 'SMTP_HOST',
+                                                        'label' => __('Host'),
+                                                        'placeholder' => __('Fill in your SMTP host')
+                                                    ]
+                                                );
+                                            ?>
                                         </div>
 
                                         <div class="col-span-4 sm:col-span-2">
-                                            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                                            <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-                                                <option>United States</option>
-                                                <option>Canada</option>
-                                                <option>Mexico</option>
-                                            </select>
+                                            <?php
+                                                HC(
+                                                    'Input',
+                                                    [
+                                                        'type' => 'number',
+                                                        'name' => 'SMTP_PORT',
+                                                        'label' => __('Port'),
+                                                        'placeholder' => __('Fill in your SMTP port'),
+                                                        'attributes' => [ 'min' => 0 ]
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <!-- 2ND ROW -->
+                                        <div class="col-span-4 sm:col-span-2">
+                                            <?php
+                                                HC(
+                                                    'Input',
+                                                    [
+                                                        'type' => 'text',
+                                                        'name' => 'SMTP_USER',
+                                                        'label' => __('Username'),
+                                                        'placeholder' => __('Fill in your SMTP account username')
+                                                    ]
+                                                );
+                                            ?>
                                         </div>
 
                                         <div class="col-span-4 sm:col-span-2">
-                                            <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                                            <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
+                                            <?php
+                                                HC(
+                                                    'Input',
+                                                    [
+                                                        'type' => 'text',
+                                                        'name' => 'SMTP_PASS',
+                                                        'label' => __('Password'),
+                                                        'placeholder' => __('Fill in your SMTP account password')
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <!-- 3RD ROW -->
+                                        <div class="col-span-4 sm:col-span-4">
+                                            <?php
+                                                HC(
+                                                    'Input',
+                                                    [
+                                                        'type' => 'text',
+                                                        'name' => 'SMTP_FROM',
+                                                        'label' => __('From (if different from username)'),
+                                                        'placeholder' => __("Fill in your sender's email address ")
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <!-- 4TH ROW -->
+                                        <div class="col-span-4 sm:col-span-4">
+                                            <?php
+                                                HC(
+                                                    'Select',
+                                                    [
+                                                        'name' => 'SMTP_SECURITY',
+                                                        'label' => __('Security'),
+                                                        'prompt' => __('Pick one or leave blank'),
+                                                        'options' => [
+                                                            'ssl' => __('SSL'),
+                                                            'tls' => __('TLS')
+                                                        ]
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <!-- 5TH ROW -->
+                                        <div class="col-span-4 sm:col-span-4">
+                                            <?php
+                                                HC(
+                                                    'Select',
+                                                    [
+                                                        'name' => 'SMTP_ENABLED',
+                                                        'label' => __('Enabled'),
+                                                        'options' => [
+                                                            true => __('Yes'),
+                                                            false => __('No, disable all emails')
+                                                        ]
+                                                    ]
+                                                );
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

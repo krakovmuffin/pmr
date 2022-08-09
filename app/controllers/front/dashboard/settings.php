@@ -8,7 +8,7 @@
                 'slug' => 'settings-emails',
                 'view' => '/pages/dashboard/settings/emails',
                 'scripts' => [
-                    /* [ 'url' => '/pages/login/sign-in.js' ] */
+                    [ 'url' => '/pages/dashboard/settings/emails.js' ]
                 ]
             ]);
         }
