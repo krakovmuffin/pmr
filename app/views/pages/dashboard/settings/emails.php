@@ -20,20 +20,41 @@
                             action="#" 
                             method="POST"
                             x-data="form()"
+                            x-on:submit.prevent="submit"
                         >
+                            <?php HC('Input', [ 'type' => 'hidden', 'name' => '_verified' ]); ?>
+
                             <div class="shadow sm:rounded-md sm:overflow-hidden">
-                                <div class="bg-white py-6 px-4 sm:p-6">
+                                <div class="bg-white p-6 pb-0">
                                     <!-- PANEL HEADING -->
                                     <div>
                                         <h2 class="text-lg leading-6 font-medium text-gray-900"><?= __('SMTP') ?></h2>
-                                        <p class="mt-1 text-sm text-gray-500"><?= __("Set up and verify your credentials to make sure that all emails can bet sent") ?></p>
+                                        <p class="mt-1 text-sm text-gray-500"><?= __("Set up and verify your credentials to make sure that all emails can be sent") ?></p>
                                     </div>
 
                                     <!-- PANEL BODY -->
                                     <div class="mt-6 grid grid-cols-4 gap-6">
 
                                         <!-- 1ST ROW -->
-                                        <div class="col-span-4 sm:col-span-2">
+                                        <div class="col-span-4 sm:col-span-4">
+                                            <?php
+                                                HC(
+                                                    'Select',
+                                                    [
+                                                        'name' => 'SMTP_ENABLED',
+                                                        'label' => __('Enabled'),
+                                                        'options' => [
+                                                            'true' => __('Yes'),
+                                                            'false' => __('No, disable all emails')
+                                                        ],
+                                                        'value' => _e($context['settings']['SMTP_ENABLED'])
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <!-- 2ND ROW -->
+                                        <div class="col-span-4 sm:col-span-2" x-show="payload.SMTP_ENABLED == 'true'">
                                             <?php
                                                 HC(
                                                     'Input',
@@ -41,13 +62,14 @@
                                                         'type' => 'text',
                                                         'name' => 'SMTP_HOST',
                                                         'label' => __('Host'),
-                                                        'placeholder' => __('Fill in your SMTP host')
+                                                        'placeholder' => __('Fill in your SMTP host'),
+                                                        'value' => _e($context['settings']['SMTP_HOST'])
                                                     ]
                                                 );
                                             ?>
                                         </div>
 
-                                        <div class="col-span-4 sm:col-span-2">
+                                        <div class="col-span-4 sm:col-span-2" x-show="payload.SMTP_ENABLED == 'true'">
                                             <?php
                                                 HC(
                                                     'Input',
@@ -56,58 +78,15 @@
                                                         'name' => 'SMTP_PORT',
                                                         'label' => __('Port'),
                                                         'placeholder' => __('Fill in your SMTP port'),
-                                                        'attributes' => [ 'min' => 0 ]
-                                                    ]
-                                                );
-                                            ?>
-                                        </div>
-
-                                        <!-- 2ND ROW -->
-                                        <div class="col-span-4 sm:col-span-2">
-                                            <?php
-                                                HC(
-                                                    'Input',
-                                                    [
-                                                        'type' => 'text',
-                                                        'name' => 'SMTP_USER',
-                                                        'label' => __('Username'),
-                                                        'placeholder' => __('Fill in your SMTP account username')
-                                                    ]
-                                                );
-                                            ?>
-                                        </div>
-
-                                        <div class="col-span-4 sm:col-span-2">
-                                            <?php
-                                                HC(
-                                                    'Input',
-                                                    [
-                                                        'type' => 'text',
-                                                        'name' => 'SMTP_PASS',
-                                                        'label' => __('Password'),
-                                                        'placeholder' => __('Fill in your SMTP account password')
+                                                        'attributes' => [ 'min' => 0 ],
+                                                        'value' => _e($context['settings']['SMTP_PORT'])
                                                     ]
                                                 );
                                             ?>
                                         </div>
 
                                         <!-- 3RD ROW -->
-                                        <div class="col-span-4 sm:col-span-4">
-                                            <?php
-                                                HC(
-                                                    'Input',
-                                                    [
-                                                        'type' => 'text',
-                                                        'name' => 'SMTP_FROM',
-                                                        'label' => __('From (if different from username)'),
-                                                        'placeholder' => __("Fill in your sender's email address ")
-                                                    ]
-                                                );
-                                            ?>
-                                        </div>
-
-                                        <!-- 4TH ROW -->
-                                        <div class="col-span-4 sm:col-span-4">
+                                        <div class="col-span-4 sm:col-span-4" x-show="payload.SMTP_ENABLED == 'true'">
                                             <?php
                                                 HC(
                                                     'Select',
@@ -118,33 +97,126 @@
                                                         'options' => [
                                                             'ssl' => __('SSL'),
                                                             'tls' => __('TLS')
-                                                        ]
+                                                        ],
+                                                        'value' => _e($context['settings']['SMTP_SECURITY'])
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <!-- 4TH ROW -->
+                                        <div class="col-span-4 sm:col-span-2" x-show="payload.SMTP_ENABLED == 'true'">
+                                            <?php
+                                                HC(
+                                                    'Input',
+                                                    [
+                                                        'type' => 'text',
+                                                        'name' => 'SMTP_USER',
+                                                        'label' => __('Username'),
+                                                        'placeholder' => __('Fill in your SMTP account username'),
+                                                        'value' => _e($context['settings']['SMTP_USER'])
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
+                                        <div class="col-span-4 sm:col-span-2" x-show="payload.SMTP_ENABLED == 'true'">
+                                            <?php
+                                                HC(
+                                                    'Input',
+                                                    [
+                                                        'type' => 'text',
+                                                        'name' => 'SMTP_PASS',
+                                                        'label' => __('Password'),
+                                                        'placeholder' => __('Fill in your SMTP account password'),
+                                                        'value' => _e($context['settings']['SMTP_PASS'])
                                                     ]
                                                 );
                                             ?>
                                         </div>
 
                                         <!-- 5TH ROW -->
-                                        <div class="col-span-4 sm:col-span-4">
+                                        <div class="col-span-4 sm:col-span-4" x-show="payload.SMTP_ENABLED == 'true'">
                                             <?php
                                                 HC(
-                                                    'Select',
+                                                    'Input',
                                                     [
-                                                        'name' => 'SMTP_ENABLED',
-                                                        'label' => __('Enabled'),
-                                                        'options' => [
-                                                            true => __('Yes'),
-                                                            false => __('No, disable all emails')
-                                                        ]
+                                                        'type' => 'text',
+                                                        'name' => 'SMTP_FROM',
+                                                        'label' => __('From (Optional)'),
+                                                        'placeholder' => __("Fill in your sender's email address "),
+                                                        'value' => _e($context['settings']['SMTP_FROM'])
                                                     ]
                                                 );
                                             ?>
                                         </div>
+
+                                        <div class="col-span-4 sm:col-span-4">
+                                            <?php 
+                                                HC(
+                                                    'FormError',
+                                                    [
+                                                        'key' => 'fields',
+                                                        'label' => __('Please fill in all the fields correctly')
+                                                    ]
+                                                );
+
+                                                HC(
+                                                    'FormError',
+                                                    [
+                                                        'key' => 'email',
+                                                        'label' => __('The provided credentials are wrong')
+                                                    ]
+                                                );
+
+                                                HC(
+                                                    'FormSuccess',
+                                                    [
+                                                        'key' => 'email',
+                                                        'label' => __('The test email was succesfully sent')
+                                                    ]
+                                                );
+
+                                                HC(
+                                                    'FormSuccess',
+                                                    [
+                                                        'key' => 'save',
+                                                        'label' => __('Your settings were saved')
+                                                    ]
+                                                );
+                                            ?>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                    <button type="button" class="bg-gray-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"><?= __('Send a test email') ?></button>
-                                    <button type="submit" class="bg-gray-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">Save</button>
+                                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex justify-end gap-x-2">
+                                    <div class="justify-start flex items-center mr-auto" x-show="payload.SMTP_ENABLED === 'true'">
+                                        <span class="text-sm text-gray-500">
+                                            <?= __('Sending a test email is required prior to saving') ?>
+                                        </span>
+                                    </div>
+                                    <div class="w-48" x-show="payload.SMTP_ENABLED === 'true'">
+                                        <?php
+                                            HC(
+                                                'LoadableButton',
+                                                [
+                                                    'text' => __('Send a test email'),
+                                                    'action' => 'sendTestEmail',
+                                                    'loader' => 'loadingTestEmail',
+                                                ]
+                                            );
+                                        ?>
+                                    </div>
+                                    <div class="w-32">
+                                        <?php
+                                            HC(
+                                                'FormButton',
+                                                [
+                                                    'text' => __('Save'),
+                                                ]
+                                            );
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         </form>

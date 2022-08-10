@@ -18,6 +18,7 @@
              * Mount app's routers
              */
             $this->mount(new R_Api_Login());
+            $this->mount(new R_Api_Settings());
 
             /**
              * Setup default errors handler
