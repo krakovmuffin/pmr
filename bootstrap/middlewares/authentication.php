@@ -19,10 +19,15 @@
         // HTTP header to retrieve token from
         private $header;
 
+        // Whether the error should be shown as coming from the API, or from Frontend
+        // One of : FRONT / API
+        private $for;
+
         public function __construct($params) {
             // Default
             $this->type = 'session';
             $this->table = 'users';
+            $this->for = 'front';
             $this->column = null;
             $this->header = null;
 
@@ -43,7 +48,12 @@
 
                 if(!$is_logged) {
                     $next = false;
-                    return $res->redirect(front_path('/sign-in'));
+
+                    if('front' === strtolower($this->for))
+                        return $res->redirect(front_path('/sign-in'));
+
+                    if('api' === strtolower($this->for))
+                        return $res->send_unauthorized();
                 }
 
                 $user_id = $req->session->get('user_id');
