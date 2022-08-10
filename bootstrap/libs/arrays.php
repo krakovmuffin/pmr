@@ -114,4 +114,11 @@
             return array_values(array_diff_key($arr, $excluded));
         }
 
+        public static function combine($arr, $column_key, $column_value) {
+            return array_combine(
+                array_column($arr, $column_key),
+                array_column($arr, $column_value),
+            );
+        }
+
     }
