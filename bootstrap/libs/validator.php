@@ -13,6 +13,7 @@
 
         public static function is_required($value) { return isset($value); }
         public static function is_not_empty($value) { return !empty($value); }
+        public static function is_optional($value) { return empty($value) ? true : false; }
 
         public static function is_min_length($value, $l) { return strlen($value) >= $l; }
         public static function is_max_length($value, $l) { return strlen($value) <= $l; }
@@ -96,6 +97,14 @@
             foreach($rules as $rule) {
                 $is_valid = self::_process_rule($value, $rule, $key);
 
+                // Skip all rules if value is both optional and absent
+                if($rule === 'optional' && $is_valid)
+                    return true;
+
+                // Do not consider optional as an error, to keep working on next rules
+                if($rule === 'optional' && !$is_valid)
+                    continue;
+
                 if(!$is_valid) return false;
             }
 
@@ -169,6 +178,12 @@
 
                 foreach($rules as $rule) {
                     $is_valid = self::_process_rule($value, $rule, $key);
+
+                    // Skip all rules if value is both optional and absent
+                    if($rule === 'optional' && $is_valid) break;
+
+                    // Do not consider optional as an error, to keep working on next rules
+                    if($rule === 'optional' && !$is_valid) continue;
 
                     if($is_valid) continue;
 
