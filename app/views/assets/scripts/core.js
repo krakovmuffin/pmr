@@ -53,13 +53,21 @@
         );
 
         // Setup form validation when payload changes (using magic $watch)
-        instance.$watch('payload', () => {
-          if (!Iodine) return false;
-          instance.ready = Iodine.isValidSchema(
-            instance.payload,
-            instance._schema
-          );
-        });
+        if (!instance._hasCustomValidation)
+          instance.$watch('payload', () => {
+            if (!Iodine) return false;
+            instance.ready = Iodine.isValidSchema(
+              instance.payload,
+              instance._schema
+            );
+          });
+        else
+          instance.$watch('payload', () => {
+            instance.ready = instance._performValidation(
+              instance.payload,
+              instance._schema
+            );
+          });
 
         // Setup default values injected in DOM via value="xxx"
         [...instance.$el.querySelectorAll('input, select, textarea')].forEach(
@@ -74,10 +82,16 @@
         );
 
         // Perform initial schema validation in case there are default values already
-        instance.ready = Iodine.isValidSchema(
-          instance.payload,
-          instance._schema
-        );
+        if (!instance._hasCustomValidation)
+          instance.ready = Iodine.isValidSchema(
+            instance.payload,
+            instance._schema
+          );
+        else
+          instance.ready = instance._performValidation(
+            instance.payload,
+            instance._schema
+          );
 
         /**
          * Define `redirect` method, that can, post-submit, redirect to
@@ -139,6 +153,6 @@ window.addEventListener('load', () => {
    * Appends an "quals" rule to Iodine
    */
   (() => {
-    Iodine.addRule('equals', (value, param) => value == param);
+    Iodine.addRule('equals', (value, param) => value?.toString() == param);
   })();
 });
