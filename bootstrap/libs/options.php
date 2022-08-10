@@ -70,6 +70,19 @@
         }
 
         /**
+         * Overwrites one or many settings field(s)
+         *
+         * @param {array} The new key-value associations
+         */
+        public static function overwrite($payload) {
+            if(empty($payload))
+                return;
+
+            foreach($payload as $k => $v)
+                self::$fields[$k] = $v;
+        }
+
+        /**
          * Returns the value of a given field, and an empty string if not found
          * @param {string} $field : The key of the field to retrieve the value of
          * @return {string} The value associated with $field, and an empty string if absent
