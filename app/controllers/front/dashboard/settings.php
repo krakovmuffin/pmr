@@ -14,10 +14,7 @@
                     'value' => 'SMTP_%' 
                 ]
             ]);
-            $settings = array_combine(
-                array_column($settings, 'name'),
-                array_column($settings, 'value'),
-            );
+            $settings = Arrays::combine($settings, 'name', 'value');
 
             $res->render([
                 'title' => 'Settings > Emails',
