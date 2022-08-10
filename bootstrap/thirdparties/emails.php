@@ -15,11 +15,9 @@
          * @param {string} to The recipient email address
          * @param {string} subject The email's subject
          * @param {string} body The email's body (HTML code)
+         * @return {boolean} TRUE when email was sent, FALSE when not
          */
         public function send($params) {
-            if(Options::get('ENABLE_EMAILS') === 'FALSE')
-                return;
-
             $mail = new PHPMailer(true);
             try {
                 $mail->IsSMTP();
@@ -34,10 +32,14 @@
                 $mail->Password = Options::get('SMTP_PASS');
 
                 $mail->IsHTML(true);
-                $mail->SingleTo = true;
 
-                $mail->From = Options::get('SMTP_FROM');
-                $mail->FromName = Options::get('SMTP_NAME');
+                if(!empty(Options::get('SMTP_FROM')))
+                    $mail->From = Options::get('SMTP_FROM');
+                else 
+                    $mail->From = Options::get('SMTP_USER');
+
+                if(!empty(Options::get('SMTP_NAME')))
+                    $mail->FromName = Options::get('SMTP_NAME');
 
                 $mail->addAddress($params['to']);
 
@@ -46,8 +48,10 @@
                 $mail->CharSet = 'UTF-8';
 
                 $mail->Send();
+
+                return true;
             } catch (Exception $e) {
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                return false;
             }
         }
     }
