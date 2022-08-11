@@ -47,6 +47,9 @@
             $res->send_success();
         }
 
+        /**
+         * @route POST /settings/emails
+         */
         public function save_email_settings($req, $res) {
             $payload = $req->body;
 
@@ -89,6 +92,27 @@
             $this->services['settings']->find_and_update([ 'name' => 'SMTP_ENABLED' ] , [ 'value' => 'true' ]);
 
             $req->session->remove('smtp_verified');
+
+            $res->send_success();
+        }
+
+        /**
+         * @route POST /settings/accounts
+         */
+        public function save_account_settings($req, $res) {
+            $payload = $req->body;
+
+            $schema = [
+                'ACCOUNT_REGISTRATION_ENABLED' => [ 'required' , 'boolean' ],
+                'ACCOUNT_PASSWORD_RESET_ENABLED' => [ 'required' , 'boolean' ],
+            ];
+
+            if(!Validator::is_valid_schema($payload, $schema))
+                return $res->send_malformed();
+
+            Validator::enforce_schema($payload, $schema);
+            foreach($payload as $n => $v)
+                $this->services['settings']->find_and_update([ 'name' => $n ], [ 'value' => $v ]);
 
             $res->send_success();
         }

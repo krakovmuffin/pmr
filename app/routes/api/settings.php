@@ -8,5 +8,6 @@
 
             $this->post('/emails/test', [$controller, 'send_test_email']);
             $this->post('/emails', [$controller, 'save_email_settings']);
+            $this->post('/accounts', [$controller, 'save_account_settings']);
         }
     }

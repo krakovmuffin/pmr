@@ -28,4 +28,27 @@
                 ]
             ]);
         }
+
+        public function page_accounts($req, $res) {
+            $settings = $this->services['settings']->find_all([ 
+                [
+                    'column' => 'name',
+                    'operator' => 'LIKE',
+                    'value' => 'ACCOUNT_%' 
+                ]
+            ]);
+            $settings = Arrays::combine($settings, 'name', 'value');
+
+            $res->render([
+                'title' => 'Settings > Accounts',
+                'slug' => 'settings-accounts',
+                'view' => '/pages/dashboard/settings/accounts',
+                'scripts' => [
+                    [ 'url' => '/pages/dashboard/settings/accounts.js' ]
+                ],
+                'context' => [
+                    'settings' => $settings
+                ]
+            ]);
+        }
     }
