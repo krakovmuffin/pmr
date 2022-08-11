@@ -1,4 +1,4 @@
-- users
+-- users
 CREATE TABLE users (
     pk INT GENERATED ALWAYS AS IDENTITY,
     name TEXT NOT NULL,
