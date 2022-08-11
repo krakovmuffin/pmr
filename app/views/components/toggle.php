@@ -4,23 +4,29 @@
      * - value : boolean
      * - label : string
      * - name : string
+     * - help : string
      */
 ?>
 <?php $params['id'] = uniqid(); ?>
 <?php $params['value'] = !empty($params['value']) ? $params['value'] : false; ?>
 <div 
-    class="w-full"
+    class="w-full py-4 flex items-center justify-between"
 >
     <?php if ( !empty($params['label']) ): ?>
-        <label
-            class="block text-sm font-medium text-gray-700"
-        >
-            <?= $params['label'] ?>
-        </label>
+        <div class="flex flex-col max-w-xl">
+            <label
+                class="block text-sm font-medium text-gray-700"
+            >
+                <?= $params['label'] ?>
+            </label>
+            <?php if ( !empty($params['help']) ): ?>
+                <p class="text-sm text-gray-500"><?= $params['help'] ?></p>
+            <?php endif; ?>
+        </div>
     <?php endif; ?>
 
-    <div class="mt-2"
-        x-data="{ active: <?= ($params['value'] === true) ? "true" : "false" ?> }"
+    <div class=""
+        x-data="{ active: <?= var_export($params['value'], true) ?> }"
     >
         <button 
             type="button" 
