@@ -5,7 +5,7 @@
             $this->set_prefix('/settings');
 
             $this->get('/', function($req, $res) {
-                return $res->send_not_found();
+                $res->redirect(front_path('/dashboard/settings/about'));
             });
 
             $this->get('/about', [$controller, 'page_about']);
@@ -14,4 +14,3 @@
             $this->get('/language', [$controller, 'page_language']);
         }
     }
-
