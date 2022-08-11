@@ -25,7 +25,7 @@
                     <?= __('Welcome back') ?>
                 </h2>
 
-                <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
+                <?php if ( Options::get('ACCOUNT_REGISTRATION_ENABLED') ): ?>
                     <p class="mt-2 text-sm text-gray-600 text-center">
                         <?= __('First time?') ?>
                         <?php
@@ -91,7 +91,7 @@
                         ?>
 
                     </form>
-                    <?php if ( Options::get('PASSWORD_RESET_ENABLED') ): ?>
+                    <?php if ( Options::get('ACCOUNT_PASSWORD_RESET_ENABLED') ): ?>
                         <div class="mt-6 flex items-center justify-center">
                             <div class="text-sm">
                                 <?php

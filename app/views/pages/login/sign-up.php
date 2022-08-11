@@ -25,11 +25,9 @@
                     <?= __("Let's begin") ?>
                 </h2>
 
-                <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
-                    <p class="mt-2 text-sm text-gray-600 text-center">
-                        <?= __("We'll quickly set up your account with a few questions") ?>
-                    </p>
-                <?php endif; ?>
+                <p class="mt-2 text-sm text-gray-600 text-center">
+                    <?= __("We'll quickly set up your account with a few questions") ?>
+                </p>
             </div>
 
             <div class="mt-8">

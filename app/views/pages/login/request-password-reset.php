@@ -25,11 +25,9 @@
                     <?= __('Reset your Password') ?>
                 </h2>
 
-                <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
-                    <p class="mt-2 text-sm text-gray-600 text-center">
-                        <?= __("If your email is found, we'll send you an email with a code") ?>
-                    </p>
-                <?php endif; ?>
+                <p class="mt-2 text-sm text-gray-600 text-center">
+                    <?= __("If your email is found, we'll send you an email with a code") ?>
+                </p>
             </div>
 
             <div class="mt-8">
@@ -83,7 +81,7 @@
                                 ]
                             )
                         ?>
-                        <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
+                        <?php if ( Options::get('ACCOUNT_REGISTRATION_ENABLED') ): ?>
                             <span class="text-sm">
                                 &nbsp;<?= __('or') ?>&nbsp;
                             </span>
