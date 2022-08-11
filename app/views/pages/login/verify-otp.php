@@ -25,11 +25,9 @@
                     <?= __('You have received a code') ?>
                 </h2>
 
-                <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
-                    <p class="mt-2 text-sm text-gray-600 text-center">
-                        <?= __("Type it in the field below to verify your identity") ?>
-                    </p>
-                <?php endif; ?>
+                <p class="mt-2 text-sm text-gray-600 text-center">
+                    <?= __("Type it in the field below to verify your identity") ?>
+                </p>
             </div>
 
             <div class="mt-8">
@@ -80,7 +78,7 @@
                                 ]
                             )
                         ?>
-                        <?php if ( Options::get('REGISTRATION_ENABLED') && $context['scenario'] !== 'registration' ): ?>
+                        <?php if ( Options::get('ACCOUNT_REGISTRATION_ENABLED') && $context['scenario'] !== 'registration' ): ?>
                             <span class="text-sm">
                                 &nbsp;<?= __('or') ?>&nbsp;
                             </span>

@@ -25,11 +25,9 @@
                     <?= __('Reset your Password') ?>
                 </h2>
 
-                <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
-                    <p class="mt-2 text-sm text-gray-600 text-center">
-                        <?= __("Type the new password for your account in the field below") ?>
-                    </p>
-                <?php endif; ?>
+                <p class="mt-2 text-sm text-gray-600 text-center">
+                    <?= __("Type the new password for your account in the field below") ?>
+                </p>
             </div>
 
             <div class="mt-8">
@@ -91,7 +89,7 @@
                                 ]
                             )
                         ?>
-                        <?php if ( Options::get('REGISTRATION_ENABLED') ): ?>
+                        <?php if ( Options::get('ACCOUNT_REGISTRATION_ENABLED') ): ?>
                             <span class="text-sm">
                                 &nbsp;<?= __('or') ?>&nbsp;
                             </span>
