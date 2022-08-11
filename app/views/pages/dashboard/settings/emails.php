@@ -17,7 +17,6 @@
                     <!-- PANEL : SMTP -->
                     <section>
                         <form 
-                            action="#" 
                             method="POST"
                             x-data="form()"
                             x-on:submit.prevent="submit"
