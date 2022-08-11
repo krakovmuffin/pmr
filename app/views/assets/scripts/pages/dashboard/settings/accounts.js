@@ -15,6 +15,7 @@ document.addEventListener('alpine:init', () => {
 
         this.loading = true;
         this.error = null;
+        this.success = null;
 
         const response = await api.fetch('/settings/accounts', {
           method: 'POST',
