@@ -24,6 +24,8 @@
 
         public static function is_date($value) { return preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) == true; }
 
+        public static function is_boolean($value) { return in_array(strtolower(var_export($value, true)), [ 'true', 'false', 'yes' , 'no', '0' , '1' ]); }
+
         public static function is_in($value, $a) { return in_array($value, explode(',', $a)); }
         public static function is_not_in($value, $a) { return !self::is_in($value, $a); }
 
