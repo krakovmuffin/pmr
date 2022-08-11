@@ -7,8 +7,11 @@
      * - help : string
      */
 ?>
-<?php $params['id'] = uniqid(); ?>
-<?php $params['value'] = !empty($params['value']) ? $params['value'] : false; ?>
+<?php 
+    $params['id'] = uniqid();
+    $params['value'] = !empty($params['value']) ? $params['value'] : false; 
+    $params['value'] = in_array($params['value'], [ 1 , true, 'yes' , 'true' ]);
+?>
 <div 
     class="w-full py-4 flex items-center justify-between"
 >
