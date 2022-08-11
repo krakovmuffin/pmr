@@ -10,6 +10,7 @@
 
             $this->get('/emails', [$controller, 'page_emails']);
             $this->get('/accounts', [$controller, 'page_accounts']);
+            $this->get('/language', [$controller, 'page_language']);
         }
     }
 

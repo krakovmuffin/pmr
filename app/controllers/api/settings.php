@@ -116,4 +116,25 @@
 
             $res->send_success();
         }
+
+        /**
+         * @route POST /settings/language
+         */
+        public function save_language_settings($req, $res) {
+            $payload = $req->body;
+            $locales = I18n::get_supported_locales();
+
+            $schema = [
+                'I18N_DEFAULT_LANGUAGE' => [ 'required' , 'string' , 'in:' . join(',', $locales) ],
+            ];
+
+            if(!Validator::is_valid_schema($payload, $schema))
+                return $res->send_malformed();
+
+            Validator::enforce_schema($payload, $schema);
+            foreach($payload as $n => $v)
+                $this->services['settings']->find_and_update([ 'name' => $n ], [ 'value' => $v ]);
+
+            $res->send_success();
+        }
     }
