@@ -8,6 +8,7 @@
                 return $res->send_not_found();
             });
 
+            $this->get('/about', [$controller, 'page_about']);
             $this->get('/emails', [$controller, 'page_emails']);
             $this->get('/accounts', [$controller, 'page_accounts']);
             $this->get('/language', [$controller, 'page_language']);

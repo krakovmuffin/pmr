@@ -7,14 +7,14 @@
 
         <!-- TAB CONTENT -->
         <div class="flex-1 xl:overflow-y-auto bg-slate-100">
-            <div class="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:py-12 lg:px-8">
+            <div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:py-12 lg:px-8">
                 <!-- TAB TITLE -->
                 <h1 class="text-3xl font-extrabold text-slate-900"><?= __("Language") ?></h1>
 
                 <!-- TAB BODY -->
                 <div class="mt-6 space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
 
-                    <!-- PANEL : Security -->
+                    <!-- PANEL : Language -->
                     <section>
                         <form 
                             method="POST"

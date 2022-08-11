@@ -6,6 +6,14 @@
             $this->register_service('settings', new S_Settings());
         }
 
+        public function page_about($req, $res) {
+            $res->render([
+                'title' => 'Settings > About',
+                'slug' => 'settings-emails',
+                'view' => '/pages/dashboard/settings/about',
+            ]);
+        }
+
         public function page_emails($req, $res) {
             $settings = $this->services['settings']->get_all_for('SMTP');
 
