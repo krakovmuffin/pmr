@@ -164,7 +164,7 @@
             $schema = [
                 'email' => [ 'required' , 'email', 'unique:users' ],
                 'password' => [ 'required' , 'string' , 'min_length:6' ],
-                'language' => [ 'required' , 'string' , 'in:' . join(',', i18n::get_supported_locales()) ],
+                'language' => [ 'required' , 'string' , 'in:' . join(',', I18n::get_supported_locales()) ],
                 'date_of_birth' => [ 'required' , 'date' ],
                 'name' => [ 'required' , 'string' , 'min_length:3' ]
             ];
