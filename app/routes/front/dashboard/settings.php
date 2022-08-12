@@ -4,6 +4,16 @@
             $controller = new C_Front_Dashboard_Settings();
             $this->set_prefix('/settings');
 
+            $this->use(
+                native_mdw(
+                    'authorization',
+                    [
+                        'roles' => [ 'FAMILY_MANAGER' ],
+                        'for' => 'FRONT'
+                    ]
+                )
+            );
+
             $this->get('/', function($req, $res) {
                 $res->redirect(front_path('/dashboard/settings/about'));
             });

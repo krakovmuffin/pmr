@@ -6,6 +6,16 @@
 
             $this->use(native_mdw('authentication', [ 'for' => 'API' ]));
 
+            $this->use(
+                native_mdw(
+                    'authorization',
+                    [
+                        'roles' => [ 'FAMILY_MANAGER' ],
+                        'for' => 'API'
+                    ]
+                )
+            );
+
             $this->post('/emails/test', [$controller, 'send_test_email']);
             $this->post('/emails', [$controller, 'save_email_settings']);
 
