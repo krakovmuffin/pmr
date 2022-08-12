@@ -37,11 +37,6 @@
     }
 
     /**
-     * I18n initialization
-     */
-    I18n::load();
-
-    /**
      * Database connection
     */
     Database::load();
@@ -51,6 +46,11 @@
      */
     if(Options::get('EXTRA_SETTINGS_ENABLED'))
         Options::load_from_database();
+
+    /**
+     * I18n initialization
+     */
+    I18n::load();
 
     /**
      * The app is just a global HTTP router

@@ -22,7 +22,7 @@
          * and loads all the translations using a "lookup table" require
          */
         public static function load() {
-            self::$active_locale = Options::get('DEFAULT_LOCALE');
+            self::$active_locale = Options::get('I18N_DEFAULT_LOCALE');
             require __DIR__ . '/../../app/translations/index.php';
             setLocale(LC_ALL, self::$active_locale . '.UTF8');
         }
