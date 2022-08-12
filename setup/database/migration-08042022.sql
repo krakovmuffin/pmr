@@ -24,10 +24,10 @@ VALUES
 ( 'I18N_DEFAULT_LANGUAGE' , 'string' , 'en-us' ),
 -- storage-related
 ( 'STORAGE_TYPE' , 'string' , 'local' ),
-( 'STORAGE_AWS_REGION' , 'string' , NULL ),
-( 'STORAGE_AWS_BUCKET' , 'string' , NULL ),
-( 'STORAGE_AWS_KEY' , 'string' , NULL ),
-( 'STORAGE_AWS_SECRET' , 'string' , NULL ),
+( 'STORAGE_S3_REGION' , 'string' , NULL ),
+( 'STORAGE_S3_BUCKET' , 'string' , NULL ),
+( 'STORAGE_S3_KEY' , 'string' , NULL ),
+( 'STORAGE_S3_SECRET' , 'string' , NULL ),
 -- accounts-related
 ( 'ACCOUNT_REGISTRATION_ENABLED' , 'boolean' , 'false' ),
 ( 'ACCOUNT_PASSWORD_RESET_ENABLED' , 'boolean' , 'false' );
