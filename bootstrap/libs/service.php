@@ -198,7 +198,7 @@
                     $c_str .= ')';
                 }
                 // Value = [SQL_STUFF]
-                else if(str_starts_with($c['value'], '['))
+                elseif(str_starts_with($c['value'], '['))
                     $c_str .= str_replace([ '[' , ']' ], '', $c['value']);
                 // Value = Literal
                 else {

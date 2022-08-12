@@ -38,7 +38,7 @@
 
             if ( isset($params['has_numeric_ids']) )
                 $this->has_numeric_ids = $params['has_numeric_ids'];
-            else if ( Options::get('ENCRYPTION_ENABLED') === true )
+            elseif ( Options::get('ENCRYPTION_ENABLED') === true )
                 $this->has_numeric_ids = false;
             else 
                 $this->has_numeric_ids = true;

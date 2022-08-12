@@ -90,7 +90,7 @@
                         'schedule_from' => $this->schedule_from ?? date('c')
                     ]
                 );
-            else if ( isset($this->scheduled_for) )
+            elseif ( isset($this->scheduled_for) )
                 $row = array_merge(
                     $row,
                     [
