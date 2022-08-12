@@ -2,7 +2,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('form', () =>
     adriel.makeForm({
       _schema: {
-        I18N_DEFAULT_LANGUAGE: ['required'],
+        I18N_DEFAULT_LOCALE: ['required'],
       },
 
       init() {
