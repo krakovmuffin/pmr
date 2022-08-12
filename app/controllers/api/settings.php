@@ -15,12 +15,12 @@
             $payload = $req->body;
 
             $schema = [
-                'SMTP_HOST' => [ 'required' , 'string' ],
+                'SMTP_HOST' => [ 'required' , 'string', 'not_empty' ],
                 'SMTP_USER' => [ 'required' , 'email' ],
-                'SMTP_PASS' => [ 'required' , 'string' ],
+                'SMTP_PASS' => [ 'required' , 'string', 'not_empty' ],
                 'SMTP_PORT' => [ 'required' , 'numeric' ],
                 'SMTP_FROM' => [ 'optional' , 'email' ],
-                'SMTP_SECURITY' => [ 'optional' , 'string' ]
+                'SMTP_SECURITY' => [ 'optional' , 'string', 'not_empty' ]
             ];
 
             if(!Validator::is_valid_schema($payload, $schema)) {
@@ -76,12 +76,12 @@
 
             // Flow - Activate emails
             $schema = [
-                'SMTP_HOST' => [ 'required' , 'string' ],
+                'SMTP_HOST' => [ 'required' , 'string', 'not_empty' ],
                 'SMTP_USER' => [ 'required' , 'email' ],
-                'SMTP_PASS' => [ 'required' , 'string' ],
+                'SMTP_PASS' => [ 'required' , 'string', 'not_empty' ],
                 'SMTP_PORT' => [ 'required' , 'numeric' ],
                 'SMTP_FROM' => [ 'optional' , 'email' ],
-                'SMTP_SECURITY' => [ 'optional' , 'string' ]
+                'SMTP_SECURITY' => [ 'optional' , 'string', 'not_empty' ]
             ];
 
             if(!Validator::is_valid_schema($payload, $schema))
@@ -146,11 +146,11 @@
             $payload = $req->body;
 
             $schema = [
-                'STORAGE_S3_HOST' => [ 'required' , 'string' ],
-                'STORAGE_S3_BUCKET' => [ 'required' , 'string' ],
-                'STORAGE_S3_REGION' => [ 'required' , 'string' ],
-                'STORAGE_S3_KEY' => [ 'required' , 'string' ],
-                'STORAGE_S3_SECRET' => [ 'required' , 'string' ],
+                'STORAGE_S3_HOST' => [ 'required' , 'string' , 'not_empty'],
+                'STORAGE_S3_BUCKET' => [ 'required' , 'string' , 'not_empty'],
+                'STORAGE_S3_REGION' => [ 'required' , 'string' , 'not_empty'],
+                'STORAGE_S3_KEY' => [ 'required' , 'string' , 'not_empty'],
+                'STORAGE_S3_SECRET' => [ 'required' , 'string' , 'not_empty'],
             ];
 
             if(!Validator::is_valid_schema($payload, $schema)) {
@@ -204,11 +204,11 @@
 
                 case 's3':
                     $schema = [
-                        'STORAGE_S3_HOST' => [ 'required' , 'string' ],
-                        'STORAGE_S3_BUCKET' => [ 'required' , 'string' ],
-                        'STORAGE_S3_REGION' => [ 'required' , 'string' ],
-                        'STORAGE_S3_KEY' => [ 'required' , 'string' ],
-                        'STORAGE_S3_SECRET' => [ 'required' , 'string' ],
+                        'STORAGE_S3_HOST' => [ 'required' , 'string', 'not_empty' ],
+                        'STORAGE_S3_BUCKET' => [ 'required' , 'string', 'not_empty' ],
+                        'STORAGE_S3_REGION' => [ 'required' , 'string', 'not_empty' ],
+                        'STORAGE_S3_KEY' => [ 'required' , 'string', 'not_empty' ],
+                        'STORAGE_S3_SECRET' => [ 'required' , 'string', 'not_empty' ],
                     ];
                     break;
 
