@@ -21,9 +21,10 @@ VALUES
 ( 'SMTP_SECURITY' , 'string' , NULL ),
 ( 'SMTP_FROM' , 'string' , NULL ),
 -- i18n-related
-( 'I18N_DEFAULT_LANGUAGE' , 'string' , 'en-us' ),
+( 'I18N_DEFAULT_LOCALE' , 'string' , 'en-us' ),
 -- storage-related
 ( 'STORAGE_TYPE' , 'string' , 'local' ),
+( 'STORAGE_S3_HOST' , 'string' , NULL ),
 ( 'STORAGE_S3_REGION' , 'string' , NULL ),
 ( 'STORAGE_S3_BUCKET' , 'string' , NULL ),
 ( 'STORAGE_S3_KEY' , 'string' , NULL ),
