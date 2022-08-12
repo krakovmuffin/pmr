@@ -1,8 +1,5 @@
 <?php
 
-    /**
-     * TODO : Test
-     */
     class NM_Authorization extends Middleware {
         // Type of authentication 
         // One of : API / SESSION 
