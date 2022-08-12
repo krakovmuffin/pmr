@@ -15,7 +15,8 @@
     "platform-check": false
   },
   "require": {
-    "phpmailer/phpmailer": "^6.5"
+    "phpmailer/phpmailer": "^6.5",
+    "aws/aws-sdk-php": "^3.233"
   },
   "require-dev": {
     "vimeo/psalm": "5.x-dev"
