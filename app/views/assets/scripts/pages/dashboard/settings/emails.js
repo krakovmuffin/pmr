@@ -45,6 +45,7 @@ document.addEventListener('alpine:init', () => {
 
         if (response.failed) {
           this.error = response.content.error;
+          this.payload._verified = false;
           return;
         }
 

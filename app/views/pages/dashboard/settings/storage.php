@@ -155,7 +155,7 @@
                                                 HC(
                                                     'FormError',
                                                     [
-                                                        'key' => 'email',
+                                                        'key' => 'test',
                                                         'label' => __('The provided credentials are wrong')
                                                     ]
                                                 );

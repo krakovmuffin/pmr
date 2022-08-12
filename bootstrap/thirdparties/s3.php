@@ -33,6 +33,7 @@
                     'Body'   => $content
                 ]);
             } catch (Throwable $e) {
+                /* throw $e; */
                 return false;
             }
 
@@ -53,7 +54,8 @@
                     'Key'    => $name,
                 ]);
             } catch (Throwable $e) {
-                throw $e;
+                /* throw $e; */
+                return $content;
             }
 
             return (string) $content['Body'];
