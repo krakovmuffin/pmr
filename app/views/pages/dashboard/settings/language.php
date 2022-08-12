@@ -38,9 +38,9 @@
                                                 HC(
                                                     'Select',
                                                     [
-                                                        'name' => 'I18N_DEFAULT_LANGUAGE',
+                                                        'name' => 'I18N_DEFAULT_LOCALE',
                                                         'label' => __('Locale'),
-                                                        'value' => _e($context['settings']['I18N_DEFAULT_LANGUAGE']),
+                                                        'value' => _e($context['settings']['I18N_DEFAULT_LOCALE']),
                                                         'options' => array_combine(
                                                             $context['available_locales'],
                                                             array_map(
