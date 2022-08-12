@@ -21,7 +21,7 @@
          * Writes a file to an S3-compatible server bucket
          * @param {string} $name : The resource name to store the file to
          * @param {$_FILE} $file : The raw content to store
-         * @return {boolean}
+         * @return {boolean} TRUE if storing the file worked, FALSE otherwise
          */
         public function store($name, $content) {
             $this->setup_client();
@@ -41,8 +41,9 @@
         }
 
         /**
-         * Erases a file on disk in default uploads directory
-         * @param {string} $name : The name of the file to erase
+         * Reads a file from an s3-compatible server bucket
+         * @param {string} $name : The name of the file to read
+         * @return {string} The content of the file
          */
         public function get($name) {
             $this->setup_client();
@@ -59,5 +60,25 @@
             }
 
             return (string) $content['Body'];
+        }
+
+        /**
+         * @return {boolean} TRUE if erasing the file worked, FALSE otherwise
+         */
+        public function erase($name) {
+            $this->setup_client();
+
+            try {
+                $this->client->deleteObject([
+                    'Bucket' => Options::get('STORAGE_S3_BUCKET'),
+                    'Key'    => $name,
+                ]);
+            } catch (Throwable $e) {
+                /* throw $e; */
+                return false;
+            }
+
+            return true;
+
         }
     }
