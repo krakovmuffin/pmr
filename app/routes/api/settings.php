@@ -8,7 +8,12 @@
 
             $this->post('/emails/test', [$controller, 'send_test_email']);
             $this->post('/emails', [$controller, 'save_email_settings']);
+
             $this->post('/accounts', [$controller, 'save_account_settings']);
+
             $this->post('/language', [$controller, 'save_language_settings']);
+
+            $this->post('/storage/test/s3', [$controller, 'test_storage_s3']);
+            $this->post('/storage', [$controller, 'save_storage_settings']);
         }
     }

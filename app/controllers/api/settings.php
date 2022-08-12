@@ -5,6 +5,7 @@
         protected function load() {
             $this->register_service('settings', new S_Settings());
             $this->register_thirdparty('emails', new NT_Emails());
+            $this->register_thirdparty('s3', new NT_S3());
         }
 
         /**
@@ -125,7 +126,7 @@
             $locales = I18n::get_supported_locales();
 
             $schema = [
-                'I18N_DEFAULT_LANGUAGE' => [ 'required' , 'string' , 'in:' . join(',', $locales) ],
+                'I18N_DEFAULT_LOCALE' => [ 'required' , 'string' , 'in:' . join(',', $locales) ],
             ];
 
             if(!Validator::is_valid_schema($payload, $schema))
@@ -136,5 +137,93 @@
                 $this->services['settings']->find_and_update([ 'name' => $n ], [ 'value' => $v ]);
 
             $res->send_success();
+        }
+
+        /**
+         * @route POST /settings/storage/test/s3
+         */
+        public function test_storage_s3($req, $res) {
+            $payload = $req->body;
+
+            $schema = [
+                'STORAGE_S3_HOST' => [ 'required' , 'string' ],
+                'STORAGE_S3_BUCKET' => [ 'required' , 'string' ],
+                'STORAGE_S3_REGION' => [ 'required' , 'string' ],
+                'STORAGE_S3_KEY' => [ 'required' , 'string' ],
+                'STORAGE_S3_SECRET' => [ 'required' , 'string' ],
+            ];
+
+            if(!Validator::is_valid_schema($payload, $schema)) {
+                $req->session->set('storage_verified', false);
+                return $res->send_malformed([ 'content' => [ 'error' => 'fields' ] ]);
+            }
+
+            Validator::enforce_schema($payload, $schema);
+            Options::overwrite($payload);
+
+            $is_verified = false; 
+            
+            $test_chain = uniqid();
+            $this->thirdparties['s3']->store('pmr', $test_chain);
+            $is_verified = $test_chain === $this->thirdparties['s3']->get('pmr');
+
+            if(!$is_verified) {
+                $req->session->set('storage_verified', false);
+                return $res->send_malformed([ 'content' => [ 'error' => 'test' ] ]);
+            }
+
+            $req->session->set('storage_verified', true);
+            $req->session->set('storage_type', 's3');
+
+            $res->send_success();
+        }
+
+        /**
+         * @route POST /settings/storage
+         */
+        public function save_storage_settings($req, $res) {
+            $payload = $req->body;
+
+            if(!isset($payload['STORAGE_TYPE']))
+                return $res->send_malformed();
+
+            if($payload['STORAGE_TYPE'] !== 'local') {
+                if($req->session->get('storage_verified') !== true)
+                    return $res->send_unauthorized();
+
+                if($req->session->get('storage_type') !== $payload['STORAGE_TYPE'])
+                    return $res->send_unauthorized();
+            }
+
+            $storage_type = $payload['STORAGE_TYPE'];
+            switch($storage_type) {
+                case 'local': $schema = []; break;
+
+                case 's3':
+                    $schema = [
+                        'STORAGE_S3_HOST' => [ 'required' , 'string' ],
+                        'STORAGE_S3_BUCKET' => [ 'required' , 'string' ],
+                        'STORAGE_S3_REGION' => [ 'required' , 'string' ],
+                        'STORAGE_S3_KEY' => [ 'required' , 'string' ],
+                        'STORAGE_S3_SECRET' => [ 'required' , 'string' ],
+                    ];
+                    break;
+
+                default: 
+                    return $res->send_malformed();
+            }
+
+            if(!Validator::is_valid_schema($payload, $schema))
+                return $res->send_malformed();
+            
+            Validator::enforce_schema($payload, $schema);
+            foreach($payload as $n => $v)
+                $this->services['settings']->find_and_update([ 'name' => $n ], [ 'value' => $v ]);
+            $this->services['settings']->find_and_update([ 'name' => 'STORAGE_TYPE' ], [ 'value' => $storage_type ]);
+
+            $req->session->remove('storage_verified');
+            $req->session->remove('storage_type');
+
+            return $res->send_success();
         }
     }

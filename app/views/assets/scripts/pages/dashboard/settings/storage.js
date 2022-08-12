@@ -3,45 +3,48 @@ document.addEventListener('alpine:init', () => {
     adriel.makeForm({
       _schema: {
         _verified: ['required', 'equals:true'],
-        SMTP_HOST: ['required', 'string'],
-        SMTP_PORT: ['required', 'numeric'],
-        SMTP_USER: ['required', 'email'],
-        SMTP_PASS: ['required', 'string'],
-        SMTP_FROM: ['optional', 'email'],
-        SMTP_SECURITY: ['optional', 'string'],
-        SMTP_ENABLED: ['required'],
+        STORAGE_TYPE: ['required', 'string'],
+        STORAGE_S3_HOST: ['required', 'string'],
+        STORAGE_S3_BUCKET: ['required', 'string'],
+        STORAGE_S3_REGION: ['required', 'string'],
+        STORAGE_S3_KEY: ['required', 'string'],
+        STORAGE_S3_SECRET: ['required', 'string'],
       },
 
       _hasCustomValidation: true,
       _performValidation: (payload, schema) => {
         if (!Iodine) return false;
 
-        if (payload.SMTP_ENABLED === 'false') return true;
+        if (payload.STORAGE_TYPE === 'local') return true;
 
         return Iodine.isValidSchema(payload, schema);
       },
 
-      loadingTestEmail: false,
+      loadingS3Test: false,
 
       init() {
         this.initForm(this);
       },
 
-      async sendTestEmail() {
+      async testS3Connection() {
         if (this.loading) return;
-        if (this.loadingTestEmail) return;
+        if (this.loadingTest) return;
 
-        this.loadingTestEmail = true;
+        this.loadingTest = true;
 
         this.error = null;
         this.success = null;
 
-        const response = await api.fetch('/settings/emails/test', {
-          method: 'POST',
-          body: this.payload,
-        });
+        const storageType = this.payload.STORAGE_TYPE;
+        const response = await api.fetch(
+          `/settings/storage/test/${storageType}`,
+          {
+            method: 'POST',
+            body: this.payload,
+          }
+        );
 
-        this.loadingTestEmail = false;
+        this.loadingTest = false;
 
         if (response.failed) {
           this.error = response.content.error;
@@ -49,7 +52,7 @@ document.addEventListener('alpine:init', () => {
         }
 
         this.payload._verified = true;
-        this.success = 'email';
+        this.success = 'test';
       },
 
       async submit() {
@@ -59,7 +62,7 @@ document.addEventListener('alpine:init', () => {
         this.error = null;
         this.success = null;
 
-        const response = await api.fetch('/settings/emails', {
+        const response = await api.fetch('/settings/storage', {
           method: 'POST',
           body: this.payload,
         });

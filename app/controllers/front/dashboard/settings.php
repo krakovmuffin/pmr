@@ -63,4 +63,20 @@
                 ]
             ]);
         }
+
+        public function page_storage($req, $res) {
+            $settings = $this->services['settings']->get_all_for('STORAGE');
+
+            $res->render([
+                'title' => 'Settings > Storage',
+                'slug' => 'settings-storage',
+                'view' => '/pages/dashboard/settings/storage',
+                'scripts' => [
+                    [ 'url' => '/pages/dashboard/settings/storage.js' ]
+                ],
+                'context' => [
+                    'settings' => $settings
+                ]
+            ]);
+        }
     }
