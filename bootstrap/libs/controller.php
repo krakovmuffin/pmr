@@ -84,7 +84,6 @@
          * @param {array} $schema : The schema to look for ($f => $operator)
          * @param {array} $params : The GET parameters ($k => $v)
          * @return {array<array>} : A GET querystring
-         * TODO : urlencode ?
          */
         public function generate_str_filters($schema, $params) {
             $filters = [];
