@@ -163,9 +163,12 @@
 
             $is_verified = false; 
             
-            $test_chain = uniqid();
-            $this->thirdparties['s3']->store('pmr', $test_chain);
-            $is_verified = $test_chain === $this->thirdparties['s3']->get('pmr');
+            $name = 'pmr'; $test_chain = uniqid();
+            $can_write = $this->thirdparties['s3']->store($name, $test_chain);
+            $can_read = $test_chain === $this->thirdparties['s3']->get($name);
+            $can_delete = $this->thirdparties['s3']->erase($name);
+
+            $is_verified = $can_write && $can_read && $can_delete;
 
             if(!$is_verified) {
                 $req->session->set('storage_verified', false);
