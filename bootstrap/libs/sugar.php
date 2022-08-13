@@ -60,11 +60,11 @@
      * @param {array} $params The list of parameters to substitue in the string, if needed
      * @return {string} The translated $key, substituted with $params if needed.
      */
-    function __($key, $params = []) {
+    function __($key, $params = null) {
         if(empty($params))
             return I18n::translate($key);
 
-        return sprintf(I18n::translate($key), ...$params);
+        return sprintf(I18n::translate($key), $params);
     }
 
     /**
