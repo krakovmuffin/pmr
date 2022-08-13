@@ -89,6 +89,10 @@
             return false;
         }
 
+        /**
+         * Determine whether the given array is a key => value table
+         * or an integer-indexed array
+         */
         public static function is_associative($arr) {
             if (array() === $arr) return false;
             return array_keys($arr) !== range(0, count($arr) - 1);
@@ -120,5 +124,4 @@
                 array_column($arr, $column_value),
             );
         }
-
     }
