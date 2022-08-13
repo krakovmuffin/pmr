@@ -47,6 +47,7 @@
                 return $res->redirect(front_path('/dashboard/doctors'));
 
             $current_doctor = $this->services['doctors']->get($doctor_id);
+
             $doctors = $this->services['doctors']->get_all();
             $this->services['doctors']->group_by_alphabet($doctors);
 
