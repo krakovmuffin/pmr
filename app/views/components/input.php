@@ -9,6 +9,7 @@
      * - disabled : boolean 
      * - attributes : associative array
      * - native : boolean (whether to use Alpine or not)
+     * - options : associative array (when type = datalist)
      */
 ?>
 <?php $params['id'] = uniqid(); ?>
@@ -36,7 +37,12 @@
         <input 
             id="<?= $params['id'] ?>"
             name="<?= $params['name'] ?>"
-            type="<?= $params['type'] ?>"
+
+            <?php if ( $params['type'] !== 'datalist' ): ?>
+                type="<?= $params['type'] ?>"
+            <?php else: ?>
+                list="list_<?= $params['id'] ?>"
+            <?php endif; ?>
 
             <?php if( isset($params['disabled']) && $params['disabled'] === true ): ?>
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm bg-gray-100"
@@ -72,6 +78,14 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         />
+
+        <?php if ( $params['type'] === 'datalist' ): ?>
+            <datalist id="list_<?= $params['id'] ?>">
+                <?php foreach($params['options'] as $k => $v): ?>
+                    <option value="<?= $v ?>"><?= $k ?></option>
+                <?php endforeach; ?>
+            </datalist>
+        <?php endif; ?>
 
         <?php if ( $params['type'] === 'password' && isset($params['hint']) && $params['hint'] === true ): ?>
             <button 
