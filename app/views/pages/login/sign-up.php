@@ -85,16 +85,24 @@
                                                 'required' => true
                                             ]
                                         );
-
-                                        HC(
-                                            'StepButton',
-                                            [
-                                                'text' => __('Continue'),
-                                                'condition' => "payload.date_of_birth && payload.date_of_birth !== ''",
-                                                'step' => 2
-                                            ]
-                                        );
                                     ?>
+
+                                    <div class="w-full flex gap-x-2">
+                                        <?php
+                                            HC(
+                                                'BackStepButton',
+                                            );
+
+                                            HC(
+                                                'StepButton',
+                                                [
+                                                    'text' => __('Continue'),
+                                                    'condition' => "payload.date_of_birth && payload.date_of_birth !== ''",
+                                                    'step' => 2
+                                                ]
+                                            );
+                                        ?>
+                                    </div>
                                 </div>
                             </template>
 
@@ -116,16 +124,24 @@
                                                 'required' => true
                                             ]
                                         );
-
-                                        HC(
-                                            'StepButton',
-                                            [
-                                                'text' => __('Continue'),
-                                                'condition' => "payload.language && payload.language !== ''",
-                                                'step' => 3
-                                            ]
-                                        );
                                     ?>
+
+                                    <div class="w-full flex gap-x-2">
+                                        <?php
+                                            HC(
+                                                'BackStepButton',
+                                            );
+
+                                            HC(
+                                                'StepButton',
+                                                [
+                                                    'text' => __('Continue'),
+                                                    'condition' => "payload.language && payload.language !== ''",
+                                                    'step' => 3
+                                                ]
+                                            );
+                                        ?>
+                                    </div>
                                 </div>
                             </template>
 
