@@ -14,5 +14,13 @@
             $this->use(function($req, $res) {
                 $res->redirect(front_path('/sign-in'));
             });
+
+            // Default error handler
+            $this->set_error_handler(function($req, $res, &$next, $err) {
+                if(Options::get('MODE') === 'DEBUG')
+                    throw $err;
+
+                $next = false;
+            });
         }
     }

@@ -1,4 +1,10 @@
 <?php
+    /**
+     * Params :
+     * - current_path : string
+     */
+?>
+<?php
     $menu = [
         [
             'label' => __('Emails'),

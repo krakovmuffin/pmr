@@ -10,5 +10,7 @@
             });
 
             $this->mount(new R_Front_Dashboard_Settings());
+            $this->mount(new R_Front_Dashboard_Doctors());
+            $this->mount(new R_Front_Dashboard_Drugs());
         }
     }

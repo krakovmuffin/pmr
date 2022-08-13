@@ -19,6 +19,7 @@
              */
             $this->mount(new R_Api_Login());
             $this->mount(new R_Api_Settings());
+            $this->mount(new R_Api_Doctors());
 
             /**
              * Setup default errors handler
