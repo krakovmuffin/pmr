@@ -26,4 +26,6 @@
 
         public static $HTTP_ERROR_CODE = 500;
         public static $HTTP_ERROR_STATUS = 'Failure';
+
+        public static $APP_VERSION = '0.0.1';
     }
