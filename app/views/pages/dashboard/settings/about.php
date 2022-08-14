@@ -46,6 +46,25 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
+
+                                    <tr class="divide-x divide-gray-200">
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
+                                            <?= __('App version')?>
+                                        </td>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
+                                            <?= Constants::$APP_VERSION ?>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="divide-x divide-gray-200">
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
+                                            <?= __('App environment')?>
+                                        </td>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
+                                            <?= _e(Options::get('MODE')) ?>
+                                        </td>
+                                    </tr>
+
                                     <!-- Database -->
                                     <tr class="divide-x divide-gray-200">
                                         <td colspan="2" class="pl-6 bg-gray-100 text-left py-4 text-sm font-semibold text-gray-900">
@@ -57,7 +76,7 @@
                                             <?= __('Host') ?>
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('DB_HOST') ?>
+                                            <?= _e(Options::get('DB_HOST')) ?>
                                         </td>
                                     </tr>
                                     <tr class="divide-x divide-gray-200">
@@ -65,7 +84,7 @@
                                             <?= __('Database') ?>
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('DB_NAME') ?>
+                                            <?= _e(Options::get('DB_NAME')) ?>
                                         </td>
                                     </tr>
                                     <tr class="divide-x divide-gray-200">
@@ -73,7 +92,7 @@
                                             <?= __('Username') ?>
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('DB_USER') ?>
+                                            <?= _e(Options::get('DB_USER')) ?>
                                         </td>
                                     </tr>
                                     <tr class="divide-x divide-gray-200">
@@ -81,7 +100,7 @@
                                             <?= __('Password') ?>
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('DB_PASS') ?>
+                                            <?= _e(Options::get('DB_PASS')) ?>
                                         </td>
                                     </tr>
 
@@ -139,26 +158,10 @@
                                     </tr>
                                     <tr class="divide-x divide-gray-200">
                                         <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                                            <?= __('Environment')?>
-                                        </td>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('MODE') ?>
-                                        </td>
-                                    </tr>
-                                    <tr class="divide-x divide-gray-200">
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                                            <?= __('App version')?>
-                                        </td>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('ASSETS_VERSION') ?>
-                                        </td>
-                                    </tr>
-                                    <tr class="divide-x divide-gray-200">
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
                                             <?= __('Items per page')?>
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('PER_PAGE_DEFAULT') ?>
+                                            <?= _e(Options::get('PER_PAGE_DEFAULT')) ?>
                                         </td>
                                     </tr>
                                     <tr class="divide-x divide-gray-200">
@@ -166,7 +169,7 @@
                                             <?= __('CORS Origin')?>
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                                            <?= Options::get('CORS_ORIGIN') ?>
+                                            <?= _e(Options::get('CORS_ORIGIN')) ?>
                                         </td>
                                     </tr>
                                 </tbody>
